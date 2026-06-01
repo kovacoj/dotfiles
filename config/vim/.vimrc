@@ -1,0 +1,34 @@
+set number
+set relativenumber
+
+function! CopyVisualToClipboardOSC52() range
+  let l:save_reg = getreg('"')
+  let l:save_type = getregtype('"')
+
+  silent execute a:firstline . ',' . a:lastline . 'yank "'
+  let l:text = getreg('"')
+
+  call setreg('"', l:save_reg, l:save_type)
+
+  if empty(l:text)
+    return
+  endif
+
+  let l:encoded = system('base64 -w0', l:text)
+  if v:shell_error != 0
+    echoerr 'OSC52 clipboard copy failed'
+    return
+  endif
+
+  let l:encoded = substitute(l:encoded, '\n\+$', '', '')
+  let l:osc = "\e]52;c;" . l:encoded . "\x07"
+
+  if exists('$TMUX') && !empty($TMUX)
+    let l:osc = "\ePtmux;\e" . l:osc . "\e\\"
+  endif
+
+  call chansend(v:stderr, l:osc)
+  echo 'Copied selection to clipboard'
+endfunction
+
+xnoremap <Space>y :<C-u>call CopyVisualToClipboardOSC52()<CR>

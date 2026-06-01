@@ -12,6 +12,21 @@ bindkey '^[[8;5u' backward-kill-word
 bindkey '^[[127;5u' backward-kill-word
 bindkey '^[[3;5~' kill-word
 
+clip() {
+    if command -v clip.exe >/dev/null 2>&1; then
+        clip.exe
+        return
+    fi
+
+    if command -v xclip >/dev/null 2>&1; then
+        xclip -selection clipboard
+        return
+    fi
+
+    print -u2 'clip: no clipboard command available'
+    return 1
+}
+
 typeset -g DOTFILES_PENDING_HISTORY=''
 
 zshaddhistory() {
