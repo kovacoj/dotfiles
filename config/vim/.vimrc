@@ -1,5 +1,15 @@
 set number
 set relativenumber
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+
+" Keep the visual selection active while indenting.
+vnoremap > >gv
+vnoremap < <gv
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
 
 function! CopyVisualToClipboardOSC52() abort
   let l:save_reg = getreg('"')
