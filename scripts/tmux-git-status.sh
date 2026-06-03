@@ -22,11 +22,11 @@ while IFS= read -r line; do
     '# branch.oid '*)
       oid=${line#'# branch.oid '}
       ;;
-    '# '|'')
-      ;;
-    *)
+    '1 '*|'2 '*|'u '*|'? '*|'! '*)
       dirty='*'
       break
+      ;;
+    '# '|'')
       ;;
   esac
 done <<EOF
