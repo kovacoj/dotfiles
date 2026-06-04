@@ -155,6 +155,22 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 # Created by `pipx` on 2025-09-04 13:24:14
 export PATH="$PATH:/home/cady/.local/bin"
 
+# Windows/WSL fallback: some shells lose the VS Code CLI even though the
+# Windows install still exists. Keep this scoped as a fallback so Linux
+# machines can still rely on their normal `code` binary.
+if ! command -v code >/dev/null 2>&1; then
+    code() {
+        local vscode_cli="/mnt/c/Program Files/Microsoft VS Code/bin/code"
+
+        if [ -x "$vscode_cli" ]; then
+            "$vscode_cli" "$@"
+        else
+            print -u2 'zsh: command not found: code'
+            return 127
+        fi
+    }
+fi
+
 export NVM_DIR="$HOME/.nvm"
 load_nvm() {
     unset -f load_nvm nvm node npm npx corepack yarn pnpm
