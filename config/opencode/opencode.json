@@ -38,7 +38,24 @@
           }
         }
       }
+    },
+    "litellm": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "metacentrum",
+      "options": {
+        "baseURL": "https://llm.ai.e-infra.cz/v1"
+      },
+      "models": {
+        "kimi": {
+          "name": "kimi-k3"
+        },
+        "glm": {
+          "name": "glm-5.2"
+        },
+        "agentic": {
+          "name": "agentic"
+        }
+      }
     }
-  },
-  "share": "disabled"
+  }
 }

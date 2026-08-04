@@ -30,7 +30,7 @@ ranger() {
 }
 
 autostart_tmux_ranger() {
-    local session_name
+    local session_name start_dir
 
     [[ $- == *i* ]] || return
     [ -n "$TMUX" ] && return
@@ -41,8 +41,12 @@ autostart_tmux_ranger() {
     [ -n "$ZED_TERM" ] && return
     [ -n "${DOTFILES_DISABLE_TMUX_AUTOSTART:-}" ] && return
 
+    command -v tmux >/dev/null 2>&1 || return
+    command -v ranger >/dev/null 2>&1 || return
     session_name=$(command tmux list-sessions -F '#{session_name}' 2>/dev/null | awk 'BEGIN { n = 1 } /^[0-9]+$/ { used[$1] = 1 } END { while (used[n]) n++; print n }')
-    exec command tmux new-session -s "$session_name" -c "$HOME/personal" "$HOME/dotfiles/scripts/tmux-ranger-shell.sh"
+    start_dir=${DOTFILES_START_DIR:-$HOME/personal}
+    [ -d "$start_dir" ] || start_dir=$HOME
+    exec command tmux new-session -s "$session_name" -c "$start_dir" "$HOME/dotfiles/scripts/tmux-ranger-shell.sh"
 }
 
 autostart_tmux_ranger

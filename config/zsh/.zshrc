@@ -7,7 +7,7 @@
 # export XDG_DATA_HOME="$HOME/.local/share"
 # export XDG_CACHE_HOME="$HOME/.cache"
 # export XDG_STATE_HOME="$HOME/.local/state"
-export PATH="/usr/local/bin/tesseract:$PATH"
+[ -d /usr/local/bin/tesseract ] && export PATH="/usr/local/bin/tesseract:$PATH"
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -89,7 +89,7 @@ plugins=(
 # Keep a plain-shell fallback directory only when tmux autostart is
 # intentionally disabled for this shell.
 if [ -z "$TMUX" ] && [ -n "${DOTFILES_DISABLE_TMUX_AUTOSTART:-}" ]; then
-    cd ~/projects
+    cd "${DOTFILES_START_DIR:-$HOME}"
 fi
 
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
@@ -99,7 +99,7 @@ export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 # ssh-add ~/.ssh/id_ed25519
 if [ -z "$SSH_AUTH_SOCK" ]; then
     eval "$(ssh-agent -s)" > /dev/null
-    ssh-add ~/.ssh/id_ed25519 2>/dev/null
+    [ -f "$HOME/.ssh/id_ed25519" ] && ssh-add "$HOME/.ssh/id_ed25519" 2>/dev/null
 fi
 
 # Tmux plugin configuration (add this before source $ZSH/oh-my-zsh.sh)
@@ -118,7 +118,7 @@ source $ZSH/oh-my-zsh.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
-export CDPATH=".:$HOME:$HOME/projects"
+export CDPATH=".:$HOME${CDPATH:+:$CDPATH}"
 setopt AUTO_CD          # Just type directory name to cd into it
 setopt CDABLE_VARS      # Allow cd to variable names
 setopt AUTO_PUSHD       # Automatically push directories to stack
@@ -153,7 +153,7 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Created by `pipx` on 2025-09-04 13:24:14
-export PATH="$PATH:/home/cady/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 
 # Windows/WSL fallback: some shells lose the VS Code CLI even though the
 # Windows install still exists. Keep this scoped as a fallback so Linux
@@ -189,9 +189,9 @@ pnpm() { load_nvm; pnpm "$@"; }
 # direnv loads per-project environment variables, mainly for work/company
 # projects where API keys and similar secrets should not live in the global
 # shell environment.
-eval "$(direnv hook zsh)"
+command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 # opencode
-export PATH=/home/cady/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 
 export PATH="$HOME/.local/bin:$PATH"
