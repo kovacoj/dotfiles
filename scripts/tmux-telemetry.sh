@@ -1,20 +1,27 @@
 #!/usr/bin/env bash
 
-# CPU usage from /proc/stat.
-read -r _ user nice system idle iowait irq softirq steal _ < /proc/stat
+state_file="${TMPDIR:-/tmp}/tmux-telemetry.${UID}.state"
 
-total1=$((user + nice + system + idle + iowait + irq + softirq + steal))
-idle1=$((idle + iowait))
+read_cpu() {
+    read -r _ user nice system idle iowait irq softirq steal _ < /proc/stat
+    printf '%d %d\n' \
+        $((user + nice + system + idle + iowait + irq + softirq + steal)) \
+        $((idle + iowait))
+}
 
-sleep 0.15
+read -r total1 idle1 < <(read_cpu)
 
-read -r _ user nice system idle iowait irq softirq steal _ < /proc/stat
-
-total2=$((user + nice + system + idle + iowait + irq + softirq + steal))
-idle2=$((idle + iowait))
-
-delta_total=$((total2 - total1))
-delta_idle=$((idle2 - idle1))
+if [[ -s $state_file ]] && read -r total0 idle0 < "$state_file" 2>/dev/null; then
+    printf '%d %d\n' "$total1" "$idle1" > "$state_file"
+    delta_total=$((total1 - total0))
+    delta_idle=$((idle1 - idle0))
+else
+    printf '%d %d\n' "$total1" "$idle1" > "$state_file"
+    sleep 5
+    read -r total2 idle2 < <(read_cpu)
+    delta_total=$((total2 - total1))
+    delta_idle=$((idle2 - idle1))
+fi
 
 if (( delta_total > 0 )); then
     cpu=$((100 * (delta_total - delta_idle) / delta_total))
@@ -22,7 +29,6 @@ else
     cpu=0
 fi
 
-# RAM usage.
 read -r mem_total mem_available < <(
     awk '
         /MemTotal:/     { total=$2 }
@@ -34,5 +40,4 @@ read -r mem_total mem_available < <(
 mem_used=$((mem_total - mem_available))
 mem_pct=$((100 * mem_used / mem_total))
 
-# Print result for tmux.
 printf 'cpu %d%% ram %d%%' "$cpu" "$mem_pct"
