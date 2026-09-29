@@ -195,3 +195,6 @@ command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 export PATH="$HOME/.opencode/bin:$PATH"
 
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PATH:$HOME/go/bin"
+export PATH="/usr/local/go/bin:$HOME/go/bin:$PATH"
+. "/home/cady/.deno/env"

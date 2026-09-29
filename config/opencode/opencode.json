@@ -9,9 +9,42 @@
     },
     "explore": {
       "model": "openai/gpt-5.4"
+    },
+    "multimodal-reader": {
+      "mode": "subagent",
+      "model": "metacentrum/kimi-k2.6",
+      "description": "Reads and describes images in exhaustive detail. Use me whenever you receive an image file (screenshot, diagram, photo, UI mockup, scan) — I'll return a complete text description of its visual content. Invoke me automatically when a user attaches an image.",
+      "prompt": "{file:./prompts/multimodal-reader.txt}"
     }
   },
   "provider": {
+    "metacentrum": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "metacentrum",
+      "options": {
+        "baseURL": "https://llm.ai.e-infra.cz/v1"
+      },
+      "models": {
+        "glm-5.2": {
+          "name": "glm"
+        },
+        "deepseek-v4-pro-thinking": {
+          "name": "deepseek"
+        },
+        "kimi-k2.6": {
+          "name": "multimodal",
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
+        }
+      }
+    },
     "siemens": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "code.siemens.com",
@@ -57,5 +90,23 @@
         }
       }
     }
+<<<<<<< Updated upstream
   }
+=======
+  },
+  "mcp": {
+    "mail-client": {
+      "type": "local",
+      "command": [
+        "bash",
+        "/home/cady/projects/mail-client/scripts/mail-client-mcp-win.sh"
+      ],
+      "enabled": true,
+      "timeout": 60000
+    }
+  },
+  "plugin": [
+    "oh-my-openagent@latest"
+  ]
+>>>>>>> Stashed changes
 }

@@ -5,6 +5,9 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 
+set noerrorbells
+set belloff=all
+
 " Keep the visual selection active while indenting.
 vnoremap > >gv
 vnoremap < <gv
