@@ -11,6 +11,10 @@ set softtabstop=4
 set noerrorbells
 set belloff=all
 
+" Rename word under cursor / visual selection across the file.
+nnoremap <Leader>r :let @/=expand('<cword>')<CR>:%s///g<Left><Left>
+vnoremap <Leader>r y:%s/\V<C-r>"//g<Left><Left>
+
 " Keep the visual selection active while indenting.
 vnoremap > >gv
 vnoremap < <gv
