@@ -1,10 +1,23 @@
 {
   "$schema": "https://opencode.ai/tui.json",
   "theme": "system-fun",
-  "keybinds": {
-    "input_newline": "shift+return"
-  },
   "scroll_acceleration": {
     "enabled": true
-  }
+  },
+  "keybinds": {
+    "session_rename": "none"
+  },
+  "plugin": [
+    [
+      "@renjfk/opencode-voice",
+      {
+        "endpoint": "https://llm.ai.e-infra.cz/v1",
+        "model": "gpt-oss-120b",
+        "apiKeyEnv": "VOICE_LLM_KEY",
+        "sttEndpoint": "https://llm.ai.e-infra.cz/v1",
+        "sttModel": "whisper-large-v3",
+        "sttApiKeyEnv": "VOICE_LLM_KEY"
+      }
+    ]
+  ]
 }
