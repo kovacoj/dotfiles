@@ -130,12 +130,9 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+# Preferred terminal editor
+export EDITOR='nvim'
+export VISUAL='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
@@ -189,6 +186,7 @@ pnpm() { load_nvm; pnpm "$@"; }
 # direnv loads per-project environment variables, mainly for work/company
 # projects where API keys and similar secrets should not live in the global
 # shell environment.
+export DIRENV_LOG_FORMAT=
 command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 # opencode
