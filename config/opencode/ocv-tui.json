@@ -1,0 +1,10 @@
+{
+  "vim_initial_mode": "insert",
+  "vim_enter_submit": true,
+  "vim_insert_after_submit": true,
+  "vim_system_clipboard_register": true,
+  "vim_modal_input": false,
+  "keybinds": {
+    "copy_mode": "ctrl+alt+v,<leader>v"
+  }
+}
