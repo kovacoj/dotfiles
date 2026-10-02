@@ -70,6 +70,7 @@ return {
 	},
 	{
 		"lewis6991/gitsigns.nvim",
+		lazy = false,
 		opts = {
 			sign_priority = 100,
 			numhl = true,
