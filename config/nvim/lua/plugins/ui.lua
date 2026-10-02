@@ -33,6 +33,10 @@ return {
 				TelescopeSelection = { bg = "#515c7e" },
 				TelescopeMatching = { fg = "#ff5fd2" },
 				TelescopePromptPrefix = { fg = "#5fd7ff" },
+				["@property.json"] = { fg = "#afff5f" },
+				["@string.json"] = { fg = "#ffd75f" },
+				["@number.json"] = { fg = "#ffaf5f" },
+				["@boolean.json"] = { fg = "#c084fc" },
 			},
 		},
 		config = function(_, opts)
