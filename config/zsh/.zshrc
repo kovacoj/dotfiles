@@ -93,6 +93,8 @@ if [ -z "$TMUX" ] && [ -n "${DOTFILES_DISABLE_TMUX_AUTOSTART:-}" ]; then
 fi
 
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
+# ranger file previews use pygmentize; keep its theme close to system-fun
+export PYGMENTIZE_STYLE=monokai
 
 # Replace these lines in your .zshrc:
 # eval "$(ssh-agent -s)"
