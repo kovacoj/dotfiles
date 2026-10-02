@@ -23,7 +23,7 @@ This keeps sessions broad and disposable, while window names track the actual fo
 - Prefix: `Ctrl+s`
 - Send literal `Ctrl+s` to the app inside tmux: `Ctrl+s` then `Ctrl+s`
 - Reload tmux config: `prefix + r`
-- Scroll back: `prefix + [` — vi copy-mode in shells; inside full-screen apps (opencode, vim, less) it sends `PageUp` instead, since tmux scrollback cannot see alternate-screen content. Repeat presses page up; use the app's own keys to scroll back down.
+- Scroll back: `prefix + [` — vi copy-mode in shells; inside full-screen apps (opencode, vim, less) it enters a modal vim-style scroll instead, since tmux scrollback cannot see alternate-screen content. Keys while in scroll mode: `j`/`k` line, `u`/`d` half-page, `f`/`b` page, `g`/`G` top/bottom (arrows and PageUp/PageDown also work); quit with `q` or `Esc`. Any other key passes straight through to the app.
 - Move between panes: `Ctrl+h`, `Ctrl+j`, `Ctrl+k`, `Ctrl+l`
 - Resize panes: `prefix + H`, `prefix + J`, `prefix + K`, `prefix + L`
 
