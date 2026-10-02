@@ -1,6 +1,6 @@
 # Dotfiles
 
-Configuration for zsh, tmux, Vim, ranger, and OpenCode.
+Configuration for zsh, tmux, Vim, Neovim, ranger, and OpenCode.
 
 ## Install
 
@@ -17,6 +17,9 @@ On Ubuntu or another apt-based system, install the core packages too:
 ```sh
 ./install.sh --packages
 ```
+
+This installs the current pinned Neovim release under `~/.local/opt` because
+Ubuntu's packaged Neovim is too old for the configured plugins.
 
 Set `DOTFILES_START_DIR` to choose the directory used for new tmux sessions.
 It defaults to `~/personal`, then falls back to `$HOME` if that directory does

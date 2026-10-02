@@ -19,7 +19,8 @@ if $install_packages; then
         exit 1
     fi
     sudo apt-get update
-    sudo apt-get install -y curl direnv git ranger tmux vim xclip zsh
+    sudo apt-get install -y curl direnv fd-find git make gcc ranger ripgrep tmux vim xclip zsh
+    "$repo_dir/scripts/install-neovim.sh"
 fi
 
 link_file() {
@@ -47,6 +48,7 @@ link_file "$repo_dir/config/zsh/.zshrc" "$HOME/.zshrc"
 link_file "$repo_dir/config/zsh/.zshenv" "$HOME/.zshenv"
 link_file "$repo_dir/config/tmux/.tmux.conf" "$HOME/.tmux.conf"
 link_file "$repo_dir/config/vim/.vimrc" "$HOME/.vimrc"
+link_file "$repo_dir/config/nvim" "$HOME/.config/nvim"
 link_file "$repo_dir/config/ranger/rc.conf" "$HOME/.config/ranger/rc.conf"
 link_file "$repo_dir/config/ranger/commands.py" "$HOME/.config/ranger/commands.py"
 link_file "$repo_dir/config/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
@@ -69,6 +71,9 @@ if [ ! -d "$tpm_dir/.git" ]; then
 fi
 
 if command -v npm >/dev/null 2>&1; then
+    if ! command -v tree-sitter >/dev/null 2>&1; then
+        npm install --global --prefix "$HOME/.local" tree-sitter-cli@0.27.0
+    fi
     npm install --prefix "$HOME/.config/opencode" --ignore-scripts
 fi
 
