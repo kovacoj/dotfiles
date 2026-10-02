@@ -13,10 +13,10 @@
       {
         "endpoint": "https://llm.ai.e-infra.cz/v1",
         "model": "gpt-oss-120b",
-        "apiKeyEnv": "VOICE_LLM_KEY",
+        "apiKeyEnv": "CERIT_API_KEY",
         "sttEndpoint": "https://llm.ai.e-infra.cz/v1",
         "sttModel": "whisper-large-v3",
-        "sttApiKeyEnv": "VOICE_LLM_KEY"
+        "sttApiKeyEnv": "CERIT_API_KEY"
       }
     ]
   ]
