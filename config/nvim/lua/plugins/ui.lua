@@ -91,17 +91,9 @@ return {
 						source = git_diff,
 						symbols = { added = "+", modified = "~", removed = "-" },
 					},
-					{ "diagnostics", symbols = { error = "E ", warn = "W ", info = "I ", hint = "H " } },
 				},
 				lualine_y = {},
-				lualine_z = {
-					{
-						function()
-							return string.format("Ln %d, Col %d", vim.fn.line("."), vim.fn.col("."))
-						end,
-						padding = { left = 1, right = 1 },
-					},
-				},
+				lualine_z = {},
 			},
 			inactive_sections = {
 				lualine_a = {},
