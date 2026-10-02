@@ -25,6 +25,15 @@ return {
 				purple = "#c084fc",
 				red = "#ff5f87",
 			},
+			highlights = {
+				TelescopeBorder = { fg = "#e5e7eb" },
+				TelescopePromptBorder = { fg = "#e5e7eb" },
+				TelescopeResultsBorder = { fg = "#e5e7eb" },
+				TelescopePreviewBorder = { fg = "#e5e7eb" },
+				TelescopeSelection = { bg = "#515c7e" },
+				TelescopeMatching = { fg = "#ff5fd2" },
+				TelescopePromptPrefix = { fg = "#5fd7ff" },
+			},
 		},
 		config = function(_, opts)
 			require("cyberdream").setup(opts)
