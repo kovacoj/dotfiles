@@ -30,6 +30,9 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 opt.softtabstop = 4
 
+-- settings.json files (Windows Terminal, VS Code) allow // comments.
+vim.filetype.add({ filename = { ["settings.json"] = "jsonc" } })
+
 -- Neovim's OSC 52 provider works through WSL and tmux without xclip.
 if vim.env.SSH_TTY or vim.env.TMUX then
 	local osc52 = require("vim.ui.clipboard.osc52")
