@@ -72,24 +72,8 @@ return {
 		"lewis6991/gitsigns.nvim",
 		lazy = false,
 		opts = {
-			sign_priority = 100,
+			signcolumn = false,
 			numhl = true,
-			signs = {
-				add = { text = "│" },
-				change = { text = "│" },
-				delete = { text = "▁" },
-				topdelete = { text = "▔" },
-				changedelete = { text = "│" },
-				untracked = { text = "┆" },
-			},
-			signs_staged = {
-				add = { text = "│" },
-				change = { text = "│" },
-				delete = { text = "▁" },
-				topdelete = { text = "▔" },
-				changedelete = { text = "│" },
-				untracked = { text = "┆" },
-			},
 		},
 		keys = {
 			{ "]h", function() require("gitsigns").nav_hunk("next") end, desc = "Next Git hunk" },
