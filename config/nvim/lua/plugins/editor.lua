@@ -28,6 +28,8 @@ return {
 			telescope.load_extension("fzf")
 		end,
 		keys = {
+			{ "/", function() require("telescope.builtin").current_buffer_fuzzy_find() end, desc = "Fuzzy find in buffer" },
+			{ "<leader>/", "/", desc = "Exact search in buffer" },
 			{ "<leader>ff", "<cmd>Telescope find_files hidden=true<CR>", desc = "Find files" },
 			{ "<leader>fg", "<cmd>Telescope live_grep<CR>", desc = "Find text" },
 			{ "<leader>fb", "<cmd>Telescope buffers<CR>", desc = "Find buffers" },
