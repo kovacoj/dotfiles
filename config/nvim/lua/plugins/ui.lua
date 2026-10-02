@@ -26,6 +26,7 @@ return {
 				red = "#ff5f87",
 			},
 			highlights = {
+				FloatBorder = { fg = "#e5e7eb" },
 				TelescopeBorder = { fg = "#e5e7eb" },
 				TelescopePromptBorder = { fg = "#e5e7eb" },
 				TelescopeResultsBorder = { fg = "#e5e7eb" },
