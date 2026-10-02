@@ -31,7 +31,7 @@ return {
 				TelescopeResultsBorder = { fg = "#e5e7eb" },
 				TelescopePreviewBorder = { fg = "#e5e7eb" },
 				TelescopeSelection = { bg = "#515c7e" },
-				TelescopeMatching = { fg = "#ff5fd2" },
+				TelescopeMatching = { fg = "#ffd75f" },
 				TelescopePromptPrefix = { fg = "#5fd7ff" },
 			},
 		},
@@ -80,7 +80,7 @@ return {
 						path = 1,
 						symbols = { modified = " [+]", readonly = " [RO]", unnamed = "[No Name]" },
 						color = function()
-							return { fg = vim.bo.modified and "#ffaf5f" or "#e5e7eb" }
+							return { fg = vim.bo.modified and "#ffaf5f" or "#8b7aa8" }
 						end,
 					},
 				},
