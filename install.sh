@@ -19,8 +19,10 @@ if $install_packages; then
         exit 1
     fi
     sudo apt-get update
-    sudo apt-get install -y curl direnv fd-find git make gcc ranger ripgrep tmux vim xclip zsh
+    sudo apt-get install -y curl direnv fd-find git make gcc ranger ripgrep tmux vim xclip zsh zoxide
     "$repo_dir/scripts/install-neovim.sh"
+    "$repo_dir/scripts/install-fzf.sh"
+    "$repo_dir/scripts/install-bat.sh"
 fi
 
 link_file() {
@@ -49,6 +51,7 @@ link_file "$repo_dir/config/zsh/.zshenv" "$HOME/.zshenv"
 link_file "$repo_dir/config/tmux/.tmux.conf" "$HOME/.tmux.conf"
 link_file "$repo_dir/config/vim/.vimrc" "$HOME/.vimrc"
 link_file "$repo_dir/config/nvim" "$HOME/.config/nvim"
+link_file "$repo_dir/scripts/rgf" "$HOME/.local/bin/rgf"
 link_file "$repo_dir/config/ranger/rc.conf" "$HOME/.config/ranger/rc.conf"
 link_file "$repo_dir/config/ranger/commands.py" "$HOME/.config/ranger/commands.py"
 link_file "$repo_dir/config/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"

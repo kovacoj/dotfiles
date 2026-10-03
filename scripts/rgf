@@ -1,0 +1,37 @@
+#!/usr/bin/env zsh
+# ripgrep + fzf: first query word drives ripgrep, remaining words filter.
+# Opens the chosen match in Neovim at the matched line.
+# Based on fzf's official advanced ripgrep pattern.
+
+setopt localoptions no_nomatch
+
+export FZF_RG_TEMP
+FZF_RG_TEMP="$(mktemp)"
+trap 'rm -f "$FZF_RG_TEMP"' EXIT INT TERM HUP
+
+INITIAL_QUERY="${*:-}"
+
+TRANSFORMER='
+  rg_pat={q:1}
+  fzf_pat={q:2..}
+
+  if ! [[ -r "$FZF_RG_TEMP" ]] || [[ "$rg_pat" != "$(cat "$FZF_RG_TEMP")" ]]; then
+    echo "$rg_pat" > "$FZF_RG_TEMP"
+
+    printf "reload:sleep 0.1; rg --column --line-number --no-heading --color=always --smart-case %q || true" "$rg_pat"
+  fi
+
+  echo "+search:$fzf_pat"
+'
+
+: | fzf \
+  --ansi \
+  --disabled \
+  --query "$INITIAL_QUERY" \
+  --with-shell 'zsh -c' \
+  --bind "start,change:transform:$TRANSFORMER" \
+  --color "hl:-1:underline,hl+:-1:underline:reverse" \
+  --delimiter : \
+  --preview 'bat --color=always {1} --highlight-line {2}' \
+  --preview-window 'up,60%,border-line,+{2}+3/3,~3' \
+  --bind 'enter:become(nvim {1} +{2})'
