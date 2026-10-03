@@ -13,7 +13,7 @@ candidates=$(
       [ -d "$r" ] || continue
       find "$r" -mindepth 1 -maxdepth 2 -type d -not -path '*/.git' 2>/dev/null
     done
-  } | awk 'NF' | sort -u
+  } | awk 'NF && !seen[$0]++'
 )
 
 [ -n "$candidates" ] || exit 0
@@ -21,8 +21,15 @@ candidates=$(
 selected=$(printf '%s\n' "$candidates" | fzf --layout=reverse --prompt='project> ' || true)
 [ -n "$selected" ] || exit 0
 
-# session name from dir: stable, no dots
+# session name from dir: stable, disambiguated on basename collisions
 name=$(basename "$selected" | tr '. ' '__')
+if tmux has-session -t "=$name" 2>/dev/null; then
+  current_hd=$(tmux display-message -p -t "=$name" "#{pane_current_path}" 2>/dev/null || true)
+  if [ "$current_hd" != "$selected" ]; then
+    parent=$(basename "$(dirname "$selected")" | tr '. ' '__')
+    name="${parent}-${name}"
+  fi
+fi
 
 if ! tmux has-session -t "=$name" 2>/dev/null; then
   tmux new-session -d -s "$name" -c "$selected"
