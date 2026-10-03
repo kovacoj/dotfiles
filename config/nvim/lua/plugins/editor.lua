@@ -8,6 +8,7 @@ return {
 			keymaps = {
 				["h"] = "actions.parent",
 				["l"] = "actions.select",
+				["<Esc>"] = "actions.close",
 			},
 		},
 		keys = {
