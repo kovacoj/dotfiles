@@ -197,10 +197,10 @@ command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 # fzf: Ctrl-T file picker, Ctrl-R history, Alt-C cd picker.
 # Ubuntu's fzf 0.44 has no `fzf --zsh` (needs >= 0.48), so source the
 # bundled legacy integration scripts instead.
+# Note: `--style minimal` needs fzf >= 0.48; omitted for Ubuntu's 0.44.
 export FZF_DEFAULT_OPTS="
   --layout reverse
   --info inline
-  --style minimal
   --height ~40%
 "
 _fzf_skip=".git,.coverage*,.venv,venv,.pytest_cache,__pycache__,*.egg-info,.mypy_cache,.tox,node_modules,build,dist,target"
