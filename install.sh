@@ -47,6 +47,9 @@ link_file() {
 }
 
 link_file "$repo_dir/config/zsh/.zshrc" "$HOME/.zshrc"
+
+# dotfiles-managed git settings (editor etc.) are included from ~/.gitconfig
+git config --global include.path "$repo_dir/config/git/gitconfig" 2>/dev/null || true
 link_file "$repo_dir/config/zsh/.zshenv" "$HOME/.zshenv"
 link_file "$repo_dir/config/tmux/.tmux.conf" "$HOME/.tmux.conf"
 link_file "$repo_dir/config/vim/.vimrc" "$HOME/.vimrc"

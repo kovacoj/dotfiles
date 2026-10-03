@@ -1,0 +1,49 @@
+{
+  "name": "latte",
+  "opencode_theme": "latte",
+  "pygments": "default",
+  "wt_scheme": "Light+",
+  "nvim": {
+    "variant": "light",
+    "fg": "#4c4f69",
+    "muted": "#8c8fa1",
+    "green": "#40a02b",
+    "cyan": "#209fb5",
+    "yellow": "#df8e1d",
+    "orange": "#fe640b",
+    "magenta": "#ea76cb",
+    "purple": "#8839ef",
+    "red": "#d20f39",
+    "select": "#ccd0da",
+    "linenr": "#acb0be"
+  },
+  "tmux": {
+    "session": "#209fb5",
+    "telemetry": "#40a02b",
+    "path": "#8839ef",
+    "git_problem": "#d20f39",
+    "current_window": "#df8e1d",
+    "text": "#4c4f69"
+  },
+  "wt": {
+    "background": "#EFF1F5",
+    "foreground": "#4C4F69",
+    "black": "#5C5F77",
+    "red": "#D20F39",
+    "green": "#40A02B",
+    "yellow": "#DF8E1D",
+    "blue": "#1E66F5",
+    "purple": "#8839EF",
+    "cyan": "#209FB5",
+    "white": "#BCC0CC",
+    "brightBlack": "#6C6F85",
+    "brightRed": "#E64553",
+    "brightGreen": "#4CAE33",
+    "brightYellow": "#E79E3C",
+    "brightBlue": "#3B82F6",
+    "brightPurple": "#A367EA",
+    "brightCyan": "#04A5E5",
+    "brightWhite": "#CCD0DA",
+    "selectionBackground": "#CCD0DA"
+  }
+}
