@@ -21,8 +21,15 @@ end, { desc = "Toggle comment selection" })
 map("n", "<leader>w", "<cmd>write<CR>", { desc = "Write file" })
 map("n", "<leader>q", "<cmd>quit<CR>", { desc = "Quit window" })
 
--- These match the Ctrl+h/j/k/l pane movement already used by tmux.
-map("n", "<C-h>", "<C-w>h", { desc = "Window left" })
-map("n", "<C-j>", "<C-w>j", { desc = "Window down" })
-map("n", "<C-k>", "<C-w>k", { desc = "Window up" })
-map("n", "<C-l>", "<C-w>l", { desc = "Window right" })
+-- Smart nav: move inside Neovim; at the edge of the layout, hand off to the tmux pane.
+local function smart_nav(dir, tmux_dir)
+	local prev_win = vim.api.nvim_get_current_win()
+	vim.cmd("wincmd " .. dir)
+	if vim.api.nvim_get_current_win() == prev_win and vim.env.TMUX then
+		vim.fn.system("tmux select-pane -" .. tmux_dir)
+	end
+end
+map("n", "<C-h>", function() smart_nav("h", "L") end, { desc = "Window/pane left" })
+map("n", "<C-j>", function() smart_nav("j", "D") end, { desc = "Window/pane down" })
+map("n", "<C-k>", function() smart_nav("k", "U") end, { desc = "Window/pane up" })
+map("n", "<C-l>", function() smart_nav("l", "R") end, { desc = "Window/pane right" })
