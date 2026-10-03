@@ -16,11 +16,13 @@ if [[ -s $state_file ]] && read -r total0 idle0 < "$state_file" 2>/dev/null; the
     delta_total=$((total1 - total0))
     delta_idle=$((idle1 - idle0))
 else
+    # First sample: store the baseline for the next refresh and show 'cpu --'
     printf '%d %d\n' "$total1" "$idle1" > "$state_file"
-    sleep 5
-    read -r total2 idle2 < <(read_cpu)
-    delta_total=$((total2 - total1))
-    delta_idle=$((idle2 - idle1))
+    read -r mem_total mem_available < <(
+        awk '/MemTotal:/{total=$2} /MemAvailable:/{available=$2} END{print total, available}' /proc/meminfo
+    )
+    printf 'cpu -- ram %d%%' $((100 * (mem_total - mem_available) / mem_total))
+    exit 0
 fi
 
 if (( delta_total > 0 )); then
