@@ -96,8 +96,15 @@ export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 # opencode/ranger themes render full truecolor palettes only when this is set
 export COLORTERM=truecolor
 
-# palette-env.sh (per-theme values like PYGMENTIZE_STYLE) is written by scripts/theme.sh
+# palette-env.sh (per-theme values like PYGMENTIZE_STYLE/BAT_THEME) is written by scripts/theme.sh
 [ -f "$HOME/.config/palette-env.sh" ] && source "$HOME/.config/palette-env.sh"
+
+# `theme neon|latte` — switch all apps at once, then refresh preview colors here too
+theme() {
+  "$HOME/dotfiles/scripts/theme.sh" "$@" || return
+  [ -f "$HOME/.config/palette-env.sh" ] && source "$HOME/.config/palette-env.sh"
+  echo "theme switched; restart nvim + opencode for full effect"
+}
 
 # Replace these lines in your .zshrc:
 # eval "$(ssh-agent -s)"
