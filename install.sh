@@ -21,6 +21,7 @@ if $install_packages; then
     sudo apt-get update
     sudo apt-get install -y curl direnv fd-find git make gcc ranger ripgrep tmux vim xclip zsh zoxide
     "$repo_dir/scripts/install-neovim.sh"
+    "$repo_dir/scripts/install-lazygit.sh"
     "$repo_dir/scripts/install-fzf.sh"
     "$repo_dir/scripts/install-bat.sh"
 fi
@@ -55,6 +56,7 @@ link_file "$repo_dir/config/tmux/.tmux.conf" "$HOME/.tmux.conf"
 link_file "$repo_dir/config/vim/.vimrc" "$HOME/.vimrc"
 link_file "$repo_dir/config/nvim" "$HOME/.config/nvim"
 link_file "$repo_dir/scripts/rgf" "$HOME/.local/bin/rgf"
+link_file "$repo_dir/scripts/dotpreview" "$HOME/.local/bin/dotpreview"
 link_file "$repo_dir/config/ranger/rc.conf" "$HOME/.config/ranger/rc.conf"
 link_file "$repo_dir/config/ranger/rifle.conf" "$HOME/.config/ranger/rifle.conf"
 link_file "$repo_dir/config/ranger/scope.sh" "$HOME/.config/ranger/scope.sh"
@@ -66,10 +68,10 @@ mkdir -p "$HOME/.config/opencode/themes" "$HOME/.config/opencode/prompts"
 [ -e "$HOME/.config/opencode/tui.json" ] || cp "$repo_dir/config/opencode/tui.json" "$HOME/.config/opencode/tui.json"
 [ -e "$HOME/.config/opencode/ocv-tui.json" ] || cp "$repo_dir/config/opencode/ocv-tui.json" "$HOME/.config/opencode/ocv-tui.json"
 link_file "$repo_dir/config/opencode/package.json" "$HOME/.config/opencode/package.json"
-link_file "$repo_dir/config/opencode/themes/system-fun.json" "$HOME/.config/opencode/themes/system-fun.json"
-link_file "$repo_dir/config/opencode/themes/latte.json" "$HOME/.config/opencode/themes/latte.json"
+link_file "$repo_dir/config/opencode/themes/catppuccin-mocha.json" "$HOME/.config/opencode/themes/catppuccin-mocha.json"
+link_file "$repo_dir/config/opencode/themes/catppuccin-latte.json" "$HOME/.config/opencode/themes/catppuccin-latte.json"
 link_file "$repo_dir/scripts/ocv.sh" "$HOME/.local/bin/ocv"
-link_file "$repo_dir/scripts/rgf" "$HOME/.local/bin/rgf"
+link_file "$repo_dir/config/opencode/prompts/multimodal-reader.txt" "$HOME/.config/opencode/prompts/multimodal-reader.txt"
 link_file "$repo_dir/config/opencode/prompts/multimodal-reader.txt" "$HOME/.config/opencode/prompts/multimodal-reader.txt"
 
 if [ ! -d "$HOME/.oh-my-zsh/.git" ]; then
