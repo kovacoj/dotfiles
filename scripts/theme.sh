@@ -4,7 +4,7 @@
 set -euo pipefail
 
 repo="$HOME/dotfiles"
-name="${1:?usage: theme <neon|light>}"
+name="${1:?usage: theme <dark|light>}"
 data="$repo/color-schemes/$name.json"
 pal="${XDG_STATE_HOME:-$HOME/.local/state}/system-theme"
 
@@ -112,13 +112,12 @@ import shutil as _shutil
 if _shutil.which("bat"):
     os.system("bat cache --build >/dev/null 2>&1")
 
-# 4) opencode theme reference (opencode.json + tui.json + ocv-tui.json; live + repo)
+# 4) opencode theme reference — LIVE config only. Repo files remain the
+# portable baseline so theme switching never dirties the working tree.
 oc_files = [
     f"{home}/.config/opencode/opencode.json",
-    f"{repo}/config/opencode/opencode.json",
     f"{home}/.config/opencode/tui.json",
-    f"{repo}/config/opencode/tui.json",
-    f"{repo}/config/opencode/ocv-tui.json",
+    f"{home}/.config/opencode/ocv-tui.json",
 ]
 for path in oc_files:
     try:

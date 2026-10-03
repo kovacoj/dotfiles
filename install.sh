@@ -59,10 +59,18 @@ link_file "$repo_dir/config/ranger/rc.conf" "$HOME/.config/ranger/rc.conf"
 link_file "$repo_dir/config/ranger/rifle.conf" "$HOME/.config/ranger/rifle.conf"
 link_file "$repo_dir/config/ranger/scope.sh" "$HOME/.config/ranger/scope.sh"
 link_file "$repo_dir/config/ranger/commands.py" "$HOME/.config/ranger/commands.py"
-link_file "$repo_dir/config/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
-link_file "$repo_dir/config/opencode/tui.json" "$HOME/.config/opencode/tui.json"
+# opencode.json + tui.json are live per-machine configs the theme switcher
+# mutates; copy once (never overwrite an existing live config).
+mkdir -p "$HOME/.config/opencode/themes" "$HOME/.config/opencode/prompts"
+[ -e "$HOME/.config/opencode/opencode.json" ] || cp "$repo_dir/config/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
+[ -e "$HOME/.config/opencode/tui.json" ] || cp "$repo_dir/config/opencode/tui.json" "$HOME/.config/opencode/tui.json"
+[ -e "$HOME/.config/opencode/ocv-tui.json" ] || cp "$repo_dir/config/opencode/ocv-tui.json" "$HOME/.config/opencode/ocv-tui.json"
 link_file "$repo_dir/config/opencode/package.json" "$HOME/.config/opencode/package.json"
 link_file "$repo_dir/config/opencode/themes/system-fun.json" "$HOME/.config/opencode/themes/system-fun.json"
+link_file "$repo_dir/config/opencode/themes/latte.json" "$HOME/.config/opencode/themes/latte.json"
+link_file "$repo_dir/scripts/ocv.sh" "$HOME/.local/bin/ocv"
+link_file "$repo_dir/scripts/rgf" "$HOME/.local/bin/rgf"
+link_file "$repo_dir/config/opencode/prompts/multimodal-reader.txt" "$HOME/.config/opencode/prompts/multimodal-reader.txt"
 
 if [ ! -d "$HOME/.oh-my-zsh/.git" ]; then
     git clone --depth 1 https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"

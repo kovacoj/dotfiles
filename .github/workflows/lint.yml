@@ -1,0 +1,26 @@
+name: lint
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: bash syntax check
+        run: for f in install.sh scripts/*.sh; do bash -n "$f"; done
+
+      - name: zsh syntax check
+        run: |
+          sudo apt-get install -y zsh
+          zsh -n config/zsh/.zshrc config/zsh/.zshenv
+
+      - name: JSON validation
+        run: |
+          for f in color-schemes/*.json config/opencode/*.json config/opencode/themes/*.json config/nvim/lazy-lock.json; do
+            python3 -m json.tool < "$f" > /dev/null || { echo "invalid json: $f"; exit 1; }
+          done
+        shell: bash
