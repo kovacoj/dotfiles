@@ -194,46 +194,49 @@ pnpm() { load_nvm; pnpm "$@"; }
 export DIRENV_LOG_FORMAT=
 command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
-# fzf: Ctrl-T file picker, Ctrl-R history, Alt-C cd picker.
-# Modern flags (--style, --walker-skip, `fzf --zsh`) need fzf >= 0.48;
-# older systems (e.g. Ubuntu's 0.44) fall back to rg/find + legacy scripts.
+# -----------------------------------------------------------------------------
+# fzf: Ctrl-T insert paths, Ctrl-R history, Alt-C cd picker
+# -----------------------------------------------------------------------------
+# bat preview colors follow the terminal palette (no hardcoded theme)
+export BAT_THEME=ansi
+
 export FZF_DEFAULT_OPTS="
   --layout reverse
   --info inline
   --style minimal
   --height ~40%
 "
+
+_fzf_skip=".git,.coverage*,.venv,venv,.pytest_cache,__pycache__,*.egg-info,.mypy_cache,.ruff_cache,.tox,.nox,node_modules,build,dist,target,.next,.nuxt,.gradle,CMakeFiles"
+
 export FZF_CTRL_T_OPTS="
-  --preview 'if [ -d {} ]; then ls -lah {}; elif command -v batcat >/dev/null 2>&1; then batcat -n --color=always {}; elif command -v bat >/dev/null 2>&1; then bat -n --color=always {}; else pygmentize -f terminal256 -O style=\"$PYGMENTIZE_STYLE\" {} 2>/dev/null || head -n 200 {}; fi'
+  --walker-skip $_fzf_skip
+  --preview 'if [ -d {} ]; then ls -lah -- {}; else bat -n --color=always -- {}; fi'
   --preview-window='right,50%'
-  --bind 'ctrl-l:change-preview-window(down|hidden|)'
-"
-export FZF_ALT_C_OPTS="
-  --preview 'ls -lah {}'
+  --bind 'ctrl-l:change-preview-window(down,50%|hidden|right,50%)'
 "
 
-if command -v fzf >/dev/null 2>&1; then
-  if [ "$(fzf --version | awk '{print $1}' | cut -d. -f2)" -ge 48 ]; then
-    _fzf_skip=".git,.coverage*,.venv,venv,.pytest_cache,__pycache__,*.egg-info,.mypy_cache,.tox,node_modules,build,dist,target"
-    export FZF_CTRL_T_OPTS="$FZF_CTRL_T_OPTS
-      --walker-skip $_fzf_skip
-    "
-    export FZF_ALT_C_OPTS="$FZF_ALT_C_OPTS
-      --walker-skip $_fzf_skip
-    "
-    unset _fzf_skip
-    source <(fzf --zsh)
-  else
-    export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS/$'\n  --style minimal'/}"
-    if command -v rg >/dev/null 2>&1; then
-      export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git/*' --glob '!.coverage*' --glob '!.venv/*' --glob '!venv/*' --glob '!*.egg-info/*' --glob '!.mypy_cache/*' --glob '!node_modules/*' --glob '!build/*' --glob '!dist/*' --glob '!target/*'"
-      export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-      export FZF_ALT_C_COMMAND="find . -path ./.git -prune -o -path '*/.venv' -prune -o -path '*/venv' -prune -o -path '*/node_modules' -prune -o -type d -print 2>/dev/null"
-    fi
-    source /usr/share/doc/fzf/examples/key-bindings.zsh
-    source /usr/share/doc/fzf/examples/completion.zsh
-  fi
+export FZF_ALT_C_OPTS="
+  --walker-skip $_fzf_skip
+  --preview 'ls -lah -- {}'
+  --preview-window='right,50%'
+  --bind 'ctrl-l:change-preview-window(down,50%|hidden|right,50%)'
+"
+
+export FZF_CTRL_R_OPTS="
+  --preview-window=hidden
+"
+
+unset _fzf_skip
+
+# tmux >= 3.3: render pickers as native tmux popups
+if [ -n "$TMUX" ]; then
+  FZF_CTRL_T_OPTS+=" --popup center,90%,75%"
+  FZF_ALT_C_OPTS+=" --popup center,90%,75%"
+  FZF_CTRL_R_OPTS+=" --popup center,90%,70%"
 fi
+
+source <(fzf --zsh)
 
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
@@ -243,7 +246,5 @@ export PATH="$PATH:$HOME/go/bin"
 export PATH="/usr/local/go/bin:$HOME/go/bin:$PATH"
 . "$HOME/.deno/env" # what does this even do? (should remove)
 
-# linux days setup (cli na steoridech)
-eval "$(zoxide init zsh)" # source <(zoxide init zsh)
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/doc/fzf/examples/completion.zsh
+# learned directory jumps: z / zi; keep after fzf so its picker integration exists
+eval "$(zoxide init zsh)"
