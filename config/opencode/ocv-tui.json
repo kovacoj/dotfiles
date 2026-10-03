@@ -6,5 +6,6 @@
   "vim_modal_input": false,
   "keybinds": {
     "copy_mode": "ctrl+alt+v,<leader>v"
-  }
+  },
+  "theme": "system-fun-light"
 }

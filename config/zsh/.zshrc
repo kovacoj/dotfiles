@@ -93,6 +93,9 @@ if [ -z "$TMUX" ] && [ -n "${DOTFILES_DISABLE_TMUX_AUTOSTART:-}" ]; then
 fi
 
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
+# opencode/ranger themes render full truecolor palettes only when this is set
+export COLORTERM=truecolor
+
 # palette-env.sh (per-theme values like PYGMENTIZE_STYLE) is written by scripts/theme.sh
 [ -f "$HOME/.config/palette-env.sh" ] && source "$HOME/.config/palette-env.sh"
 
@@ -199,4 +202,7 @@ export PATH="$PATH:$HOME/go/bin"
 export PATH="/usr/local/go/bin:$HOME/go/bin:$PATH"
 . "$HOME/.deno/env" # what does this even do? (should remove)
 
-eval "$(zoxide init zsh)"
+# linux days setup (cli na steoridech)
+eval "$(zoxide init zsh)" # source <(zoxide init zsh)
+source /usr/share/doc/fzf/examples/key-bindings.zsh
+source /usr/share/doc/fzf/examples/completion.zsh
