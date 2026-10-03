@@ -211,7 +211,7 @@ if os.path.exists(wt_path):
     else:
         schemes.append(scheme)
     for p in s.get("profiles", {}).get("list", []):
-        if p.get("colorScheme"):
+        if p.get("name") == "Ubuntu":
             p["colorScheme"] = scheme["name"]
             p["opacity"] = wt_opacity
             p["useAcrylic"] = False
