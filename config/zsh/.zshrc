@@ -205,8 +205,8 @@ command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 # fzf: Ctrl-T insert paths, Ctrl-R history, Alt-C cd picker
 # -----------------------------------------------------------------------------
 # BAT_THEME comes from palette-env.sh (per active color-scheme);
-# `ansi` is the fallback if theme.sh hasn't run yet.
-export BAT_THEME="${BAT_THEME:-ansi}"
+# nv-dark fallback if theme.sh hasn't run yet.
+export BAT_THEME="${BAT_THEME:-nv-dark}"
 
 # rounded white border + old-telescope look (blue selection, magenta matches)
 export FZF_DEFAULT_OPTS="
