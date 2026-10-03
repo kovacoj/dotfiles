@@ -46,7 +46,7 @@ to see all of its keys.
 | `:Mason` | Inspect installed language tools |
 | `:checkhealth` | Diagnose Neovim and plugin integration |
 | `:ConformInfo` | Diagnose formatting |
-| `:Telescope help_tags` | Search Neovim documentation |
+| `:FzfLua help_tags` | Search Neovim documentation |
 | `:Tutor` | Open Neovim's interactive fundamentals tutorial |
 
 Use `:help something` whenever a concept or command is unfamiliar. Help is a

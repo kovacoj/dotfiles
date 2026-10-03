@@ -19,8 +19,17 @@ return {
 		"ibhagwan/fzf-lua",
 		config = function()
 			local fzf = require("fzf-lua")
+			local p = require("config.palette")
 			-- profile setup registers vim.ui.select silently on its own
-			fzf.setup({ vim.env.TMUX and "fzf-tmux" or "fzf-native" })
+			fzf.setup({
+				{ vim.env.TMUX and "fzf-tmux" or "fzf-native" },
+				winopts = { border = "rounded" },
+				fzf_opts = {
+					["--color"] = ("border:%s,bg+:%s,fg+:#ffffff,hl:%s,hl+:%s:underline:bold,prompt:%s,pointer:%s"):format(
+						p.fg, p.select, p.magenta, p.magenta, p.cyan, p.cyan
+					),
+				},
+			})
 
 			local map = vim.keymap.set
 			map("n", "/", fzf.blines, { desc = "Fuzzy find in buffer" })

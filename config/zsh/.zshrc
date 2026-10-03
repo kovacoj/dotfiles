@@ -200,11 +200,14 @@ command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 # bat preview colors follow the terminal palette (no hardcoded theme)
 export BAT_THEME=ansi
 
+# rounded white border + old-telescope look (blue selection, magenta matches)
 export FZF_DEFAULT_OPTS="
   --layout reverse
   --info inline
   --style minimal
   --height ~40%
+  --border rounded
+  --color 'border:#e5e7eb,bg+:#515c7e,fg+:#ffffff,hl:#ff5fd2,hl+:#ff5fd2:underline:bold,prompt:#5fd7ff,pointer:#5fd7ff'
 "
 
 _fzf_skip=".git,.coverage*,.venv,venv,.pytest_cache,__pycache__,*.egg-info,.mypy_cache,.ruff_cache,.tox,.nox,node_modules,build,dist,target,.next,.nuxt,.gradle,CMakeFiles"
