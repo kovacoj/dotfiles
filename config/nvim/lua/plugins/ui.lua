@@ -34,6 +34,11 @@ return {
 				["@string.json"] = { fg = p.yellow },
 				["@number.json"] = { fg = p.orange },
 				["@boolean.json"] = { fg = p.purple },
+				["@property.yaml"] = { fg = p.cyan },
+				["@string.yaml"] = { fg = p.yellow },
+				["@number.yaml"] = { fg = p.orange },
+				["@boolean.yaml"] = { fg = p.purple },
+				["@comment.yaml"] = { fg = p.muted },
 			},
 		},
 		config = function(_, opts)
