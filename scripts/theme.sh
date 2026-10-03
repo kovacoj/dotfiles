@@ -89,7 +89,11 @@ for key, val in {
 }.items():
     if val in wt:
         scheme[key] = wt[val]
-schemes = s.setdefault("schemes", [])
+# Windows Terminal forks overrides into "Name (modified n)" duplicates whenever
+# the UI touches settings; drop those duplicates before upserting the canonical scheme.
+schemes = [x for x in s.get("schemes", []) if " (modified" not in x.get("name", "")]
+modified_dropped = len(s.get("schemes", [])) - len(schemes)
+s["schemes"] = schemes
 for i, ex in enumerate(schemes):
     if ex.get("name") == t["wt_scheme"]:
         schemes[i] = scheme
