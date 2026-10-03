@@ -16,26 +16,24 @@ return {
 		},
 	},
 	{
-		"nvim-telescope/telescope.nvim",
-		version = "*",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-		},
+		"ibhagwan/fzf-lua",
 		config = function()
-			local telescope = require("telescope")
-			telescope.setup({ defaults = { borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" } } })
-			telescope.load_extension("fzf")
+			local fzf = require("fzf-lua")
+			fzf.setup({ vim.env.TMUX and "fzf-tmux" or "fzf-native" })
+			fzf.register_ui_select()
+
+			local map = vim.keymap.set
+			map("n", "/", fzf.blines, { desc = "Fuzzy find in buffer" })
+			map("n", "<leader>/", "/", { desc = "Exact search in buffer" })
+			map("n", "<leader>ff", fzf.files, { desc = "Find files" })
+			map("n", "<leader>fg", fzf.live_grep, { desc = "Find text" })
+			map("n", "<leader>fb", fzf.buffers, { desc = "Find buffers" })
+			map("n", "<leader>fh", fzf.helptags, { desc = "Find help" })
+			map("n", "<leader>fr", fzf.oldfiles, { desc = "Recent files" })
+			map("n", "<leader>fz", fzf.zoxide, { desc = "Zoxide directories" })
+			map("n", "<leader>gs", fzf.git_status, { desc = "Git status" })
+			map("n", "<leader>gc", fzf.git_commits, { desc = "Git commits" })
 		end,
-		keys = {
-			{ "/", function() require("telescope.builtin").current_buffer_fuzzy_find() end, desc = "Fuzzy find in buffer" },
-			{ "<leader>/", "/", desc = "Exact search in buffer" },
-			{ "<leader>ff", "<cmd>Telescope find_files hidden=true<CR>", desc = "Find files" },
-			{ "<leader>fg", "<cmd>Telescope live_grep<CR>", desc = "Find text" },
-			{ "<leader>fb", "<cmd>Telescope buffers<CR>", desc = "Find buffers" },
-			{ "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Find help" },
-			{ "<leader>fr", "<cmd>Telescope oldfiles<CR>", desc = "Recent files" },
-		},
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",

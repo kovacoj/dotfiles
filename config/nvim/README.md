@@ -20,6 +20,10 @@ available mappings.
 | `Space f f` | Find a file |
 | `Space f g` | Search text in the project |
 | `Space f b` | Switch buffers |
+| `Space f z` | Jump to a zoxide directory |
+| `/` (in buffer) | Fuzzy search current buffer |
+| `Space g s` | Git status picker |
+| `Space g c` | Git commits picker |
 | `gd` / `gr` / `K` | Definition / references / documentation |
 | `Space c r` | Rename a code symbol with the language server |
 | `Space c a` | Show language-server code actions |

@@ -30,13 +30,6 @@ return {
 			},
 			highlights = {
 				FloatBorder = { fg = p.fg },
-				TelescopeBorder = { fg = p.fg },
-				TelescopePromptBorder = { fg = p.fg },
-				TelescopeResultsBorder = { fg = p.fg },
-				TelescopePreviewBorder = { fg = p.fg },
-				TelescopeSelection = { bg = p.select },
-				TelescopeMatching = { fg = p.magenta },
-				TelescopePromptPrefix = { fg = p.cyan },
 				["@property.json"] = { fg = p.green },
 				["@string.json"] = { fg = p.yellow },
 				["@number.json"] = { fg = p.orange },
@@ -124,6 +117,7 @@ return {
 			wk.add({
 				{ "<leader>c", group = "Code" },
 				{ "<leader>f", group = "Find" },
+				{ "<leader>g", group = "Git pickers" },
 				{ "<leader>h", group = "Hunk" },
 			})
 		end,
