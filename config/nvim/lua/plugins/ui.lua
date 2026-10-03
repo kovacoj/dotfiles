@@ -86,6 +86,7 @@ return {
 					},
 				},
 				lualine_x = {
+					{ "diagnostics", symbols = { error = "E ", warn = "W ", info = "I ", hint = "H " } },
 					{ "searchcount", color = { fg = p.purple } },
 					{
 						"diff",

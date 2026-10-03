@@ -30,6 +30,9 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 opt.softtabstop = 4
 
+-- No diagnostic glyphs in the sign column; counts live in the statusline instead.
+vim.diagnostic.config({ signs = false })
+
 -- settings.json files (Windows Terminal, VS Code) allow // comments.
 vim.filetype.add({ filename = { ["settings.json"] = "jsonc" } })
 
