@@ -93,8 +93,8 @@ if [ -z "$TMUX" ] && [ -n "${DOTFILES_DISABLE_TMUX_AUTOSTART:-}" ]; then
 fi
 
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
-# ranger file previews use pygmentize; keep its theme close to system-fun
-export PYGMENTIZE_STYLE=monokai
+# palette-env.sh (per-theme values like PYGMENTIZE_STYLE) is written by scripts/theme.sh
+[ -f "$HOME/.config/palette-env.sh" ] && source "$HOME/.config/palette-env.sh"
 
 # Replace these lines in your .zshrc:
 # eval "$(ssh-agent -s)"
@@ -197,4 +197,6 @@ export PATH="$HOME/.opencode/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$PATH:$HOME/go/bin"
 export PATH="/usr/local/go/bin:$HOME/go/bin:$PATH"
-. "$HOME/.deno/env"
+. "$HOME/.deno/env" # what does this even do? (should remove)
+
+eval "$(zoxide init zsh)"
