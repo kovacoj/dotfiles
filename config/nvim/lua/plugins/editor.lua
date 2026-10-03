@@ -20,17 +20,8 @@ return {
 		"ibhagwan/fzf-lua",
 		config = function()
 			local fzf = require("fzf-lua")
-			local p = require("config.palette")
 			-- profile setup registers vim.ui.select silently on its own
-			fzf.setup({
-				{ vim.env.TMUX and "fzf-tmux" or "fzf-native" },
-				winopts = { border = "rounded" },
-				fzf_opts = {
-					["--color"] = ("border:%s,bg+:%s,fg+:#ffffff,hl:%s,hl+:%s:underline:bold,prompt:%s,pointer:%s"):format(
-						p.fg, p.select, p.magenta, p.magenta, p.cyan, p.cyan
-					),
-				},
-			})
+			fzf.setup({ vim.env.TMUX and "fzf-tmux" or "fzf-native" })
 
 			local map = vim.keymap.set
 			map("n", "/", function()
@@ -57,11 +48,11 @@ return {
 		build = ":TSUpdate",
 		config = function()
 			local treesitter = require("nvim-treesitter")
-			local parsers = { "bash", "gitcommit", "json", "lua", "markdown", "markdown_inline", "python", "query", "vim", "vimdoc", "yaml", "zsh" }
+			local parsers = { "bash", "c", "cpp", "gitcommit", "json", "lua", "markdown", "markdown_inline", "python", "query", "vim", "vimdoc", "yaml", "zsh" }
 			treesitter.setup()
 			treesitter.install(parsers)
 			vim.api.nvim_create_autocmd("FileType", {
-				pattern = { "bash", "gitcommit", "json", "lua", "markdown", "python", "vim", "yaml", "zsh" },
+				pattern = { "bash", "c", "cpp", "gitcommit", "json", "lua", "markdown", "python", "vim", "yaml", "zsh" },
 				callback = function()
 					vim.treesitter.start()
 				end,

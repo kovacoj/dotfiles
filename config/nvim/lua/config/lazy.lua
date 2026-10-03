@@ -18,6 +18,6 @@ vim.opt.rtp:prepend(path)
 
 require("lazy").setup("plugins", {
 	change_detection = { notify = false },
-	install = { colorscheme = { "cyberdream" } },
+	install = { colorscheme = { "catppuccin" } },
 	ui = { border = "rounded" },
 })

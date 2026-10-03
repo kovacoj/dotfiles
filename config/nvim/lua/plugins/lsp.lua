@@ -13,8 +13,8 @@ return {
 			})
 		end,
 		opts = {
-			ensure_installed = { "bashls", "lua_ls", "pyright", "ruff" },
-			automatic_enable = { "bashls", "lua_ls", "pyright", "ruff" },
+			ensure_installed = { "bashls", "clangd", "lua_ls", "pyright", "ruff" },
+			automatic_enable = { "bashls", "clangd", "lua_ls", "pyright", "ruff" },
 		},
 		config = function(_, opts)
 			require("mason-lspconfig").setup(opts)
