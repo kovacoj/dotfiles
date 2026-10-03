@@ -73,7 +73,6 @@ link_file "$repo_dir/config/opencode/themes/catppuccin-latte.json" "$HOME/.confi
 link_file "$repo_dir/config/opencode/themes/system-fun.json" "$HOME/.config/opencode/themes/system-fun.json"
 link_file "$repo_dir/scripts/ocv.sh" "$HOME/.local/bin/ocv"
 link_file "$repo_dir/config/opencode/prompts/multimodal-reader.txt" "$HOME/.config/opencode/prompts/multimodal-reader.txt"
-link_file "$repo_dir/config/opencode/prompts/multimodal-reader.txt" "$HOME/.config/opencode/prompts/multimodal-reader.txt"
 
 if [ ! -d "$HOME/.oh-my-zsh/.git" ]; then
     git clone --depth 1 https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
