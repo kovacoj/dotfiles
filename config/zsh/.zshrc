@@ -222,7 +222,7 @@ export FZF_DEFAULT_OPTS="
 _fzf_skip=".git,.coverage*,.venv,venv,.pytest_cache,__pycache__,*.egg-info,.mypy_cache,.ruff_cache,.tox,.nox,node_modules,build,dist,target,.next,.nuxt,.gradle,CMakeFiles"
 _fzf_shared="
   --walker-skip $_fzf_skip
-  --preview 'if [ -d {} ]; then ls -lah -- {}; else bat -n --color=always -- {}; fi'
+  --preview 'if [ -d {} ]; then ls -lah -- {}; else bat -n --color=always --theme "$(. $HOME/.config/palette-env.sh 2>/dev/null; printf %s \"${BAT_THEME:-nv-dark}\")" -- {}; fi'
   --preview-window='right,50%'
   --bind 'ctrl-l:change-preview-window(down,50%|hidden|right,50%)'
 "

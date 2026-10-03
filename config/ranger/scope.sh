@@ -305,7 +305,7 @@ handle_mime() {
             env HIGHLIGHT_OPTIONS="${HIGHLIGHT_OPTIONS}" highlight \
                 --out-format="${highlight_format}" \
                 --force -- "${FILE_PATH}" && exit 5
-            env COLORTERM="${COLORTERM:-truecolor}" bat --color=always --style="plain" --theme "${BAT_THEME:-nv-dark}" \
+            env COLORTERM="${COLORTERM:-truecolor}" bat --color=always --style="plain" --theme "$(. "${XDG_CONFIG_HOME:-$HOME/.config}/palette-env.sh" 2>/dev/null; printf %s "${BAT_THEME:-nv-dark}")" \
                 -- "${FILE_PATH}" && exit 5
             pygmentize -f "${pygmentize_format}" -O "style=${PYGMENTIZE_STYLE}"\
                 -- "${FILE_PATH}" && exit 5
