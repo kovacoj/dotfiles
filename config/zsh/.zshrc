@@ -210,21 +210,19 @@ export FZF_DEFAULT_OPTS="
   --color 'border:#e5e7eb,bg+:#515c7e,fg+:#ffffff,hl:#ff5fd2,hl+:#ff5fd2:underline:bold,prompt:#5fd7ff,pointer:#5fd7ff'
 "
 
+# one shared picker surface: Ctrl-T and Alt-C look/behave identically
 _fzf_skip=".git,.coverage*,.venv,venv,.pytest_cache,__pycache__,*.egg-info,.mypy_cache,.ruff_cache,.tox,.nox,node_modules,build,dist,target,.next,.nuxt,.gradle,CMakeFiles"
-
-export FZF_CTRL_T_OPTS="
+_fzf_shared="
   --walker-skip $_fzf_skip
   --preview 'if [ -d {} ]; then ls -lah -- {}; else bat -n --color=always -- {}; fi'
   --preview-window='right,50%'
   --bind 'ctrl-l:change-preview-window(down,50%|hidden|right,50%)'
 "
+unset _fzf_skip
 
-export FZF_ALT_C_OPTS="
-  --walker-skip $_fzf_skip
-  --preview 'ls -lah -- {}'
-  --preview-window='right,50%'
-  --bind 'ctrl-l:change-preview-window(down,50%|hidden|right,50%)'
-"
+export FZF_CTRL_T_OPTS="$_fzf_shared"
+export FZF_ALT_C_OPTS="$_fzf_shared"
+unset _fzf_shared
 
 export FZF_CTRL_R_OPTS="
   --preview-window=hidden
