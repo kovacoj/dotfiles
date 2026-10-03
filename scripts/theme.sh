@@ -159,7 +159,6 @@ for key, val in {
 # Windows Terminal forks overrides into "Name (modified n)" duplicates whenever
 # the UI touches settings; drop those duplicates before upserting the canonical scheme.
 schemes = [x for x in s.get("schemes", []) if " (modified" not in x.get("name", "")]
-modified_dropped = len(s.get("schemes", [])) - len(schemes)
 s["schemes"] = schemes
 for i, ex in enumerate(schemes):
     if ex.get("name") == t["wt_scheme"]:
@@ -170,7 +169,7 @@ else:
 for p in s.get("profiles", {}).get("list", []):
     if p.get("name") == "Ubuntu" and p.get("colorScheme"):
         p["colorScheme"] = t["wt_scheme"]
-        p.setdefault("opacity", 85)
+        p["opacity"] = 85
 with open(wt_path, "w") as f:
     json.dump(s, f, indent=4)
 PYEOF
