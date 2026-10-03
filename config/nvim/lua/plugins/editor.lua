@@ -33,7 +33,13 @@ return {
 			})
 
 			local map = vim.keymap.set
-			map("n", "/", fzf.blines, { desc = "Fuzzy find in buffer" })
+			map("n", "/", function()
+				if vim.bo.filetype == "oil" then
+					vim.api.nvim_feedkeys(vim.keycode("/"), "n", false)
+					return
+				end
+				fzf.blines()
+			end, { desc = "Fuzzy find in buffer" })
 			map("n", "<leader>/", "/", { desc = "Exact search in buffer" })
 			map("n", "<leader>ff", fzf.files, { desc = "Find files" })
 			map("n", "<leader>fg", fzf.live_grep, { desc = "Find text" })
