@@ -194,6 +194,37 @@ pnpm() { load_nvm; pnpm "$@"; }
 export DIRENV_LOG_FORMAT=
 command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
+# fzf: Ctrl-T file picker, Ctrl-R history, Alt-C cd picker.
+# Ubuntu's fzf 0.44 has no `fzf --zsh` (needs >= 0.48), so source the
+# bundled legacy integration scripts instead.
+export FZF_DEFAULT_OPTS="
+  --layout reverse
+  --info inline
+  --style minimal
+  --height ~40%
+"
+_fzf_skip=".git,.coverage*,.venv,venv,.pytest_cache,__pycache__,*.egg-info,.mypy_cache,.tox,node_modules,build,dist,target"
+export FZF_CTRL_T_OPTS="
+  --walker-skip $_fzf_skip
+  --preview 'if [ -d {} ]; then ls -lah {}; elif command -v batcat >/dev/null 2>&1; then batcat -n --color=always {}; elif command -v bat >/dev/null 2>&1; then bat -n --color=always {}; else pygmentize -f terminal256 -O style=\"$PYGMENTIZE_STYLE\" {} 2>/dev/null || head -n 200 {}; fi'
+  --preview-window='right,50%'
+  --bind 'ctrl-l:change-preview-window(down|hidden|)'
+"
+export FZF_ALT_C_OPTS="
+  --walker-skip $_fzf_skip
+  --preview 'ls -lah {}'
+"
+unset _fzf_skip
+
+if command -v fzf >/dev/null 2>&1; then
+  if [ "$(fzf --version | awk '{print $1}' | cut -d. -f2)" -ge 48 ]; then
+    source <(fzf --zsh)
+  else
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+    source /usr/share/doc/fzf/examples/completion.zsh
+  fi
+fi
+
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
 
