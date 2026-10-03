@@ -209,20 +209,25 @@ command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 export BAT_THEME="${BAT_THEME:-nv-dark}"
 
 # rounded white border + old-telescope look (blue selection, magenta matches)
+# colours come from the active Catppuccin flavour via palette-env.sh (FZF_COLORS)
 export FZF_DEFAULT_OPTS="
   --layout reverse
   --info inline
   --style minimal
   --height ~40%
   --border rounded
-  --color 'border:#e5e7eb,bg+:#515c7e,fg+:#ffffff,hl:#ff5fd2,hl+:#ff5fd2:underline:bold,prompt:#5fd7ff,pointer:#5fd7ff'
 "
+if [ -n "${FZF_COLORS:-}" ]; then
+  export FZF_DEFAULT_OPTS+=" --color '$FZF_COLORS'"
+else
+  export FZF_DEFAULT_OPTS+=" --color 'border:#cdd6f4,bg+:#313244,fg+:#cdd6f4,hl+:#fab387:bold:underline,prompt:#89b4fa'"
+fi
 
 # one shared picker surface: Ctrl-T and Alt-C look/behave identically
 _fzf_skip=".git,.coverage*,.venv,venv,.pytest_cache,__pycache__,*.egg-info,.mypy_cache,.ruff_cache,.tox,.nox,node_modules,build,dist,target,.next,.nuxt,.gradle,CMakeFiles"
 _fzf_shared="
   --walker-skip $_fzf_skip
-  --preview 'if [ -d {} ]; then ls -lah -- {}; else bat -n --color=always --theme "$(. $HOME/.config/palette-env.sh 2>/dev/null; printf %s \"${BAT_THEME:-nv-dark}\")" -- {}; fi'
+  --preview 'if [ -d {} ]; then ls -lah -- {}; else dotpreview {}; fi'
   --preview-window='right,50%'
   --bind 'ctrl-l:change-preview-window(down,50%|hidden|right,50%)'
 "

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Shared source/text preview renderer for ranger, fzf (Ctrl-T/Alt-C) and rgf.
+# Accepts: FILE [LINE]. Colors always come from the active Catppuccin bat theme.
+set -uo pipefail
+
+file="${1:?usage: dotpreview FILE [LINE]}"
+line="${2:-}"
+
+palette_env="${XDG_CONFIG_HOME:-$HOME/.config}/palette-env.sh"
+[ -r "$palette_env" ] && . "$palette_env"
+
+if [ -n "$line" ]; then
+  exec bat --color=always --style=plain --theme="${BAT_THEME:-Catppuccin Mocha}" \
+    --highlight-line "$line" -- "$file"
+else
+  exec bat --color=always --style=plain --theme="${BAT_THEME:-Catppuccin Mocha}" -- "$file"
+fi

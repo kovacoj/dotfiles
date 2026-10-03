@@ -32,6 +32,6 @@ TRANSFORMER='
   --bind "start,change:transform:$TRANSFORMER" \
   --color "hl:-1:underline,hl+:-1:underline:reverse" \
   --delimiter : \
-  --preview 'bat --color=always --theme "$(. "$HOME/.config/palette-env.sh" 2>/dev/null; printf %s "${BAT_THEME:-nv-dark}")" --highlight-line {2} {1}' \
+  --preview 'dotpreview {1} {2}' \
   --preview-window 'up,60%,border-line,+{2}+3/3,~3' \
   --bind 'enter:become(nvim {1} +{2})'

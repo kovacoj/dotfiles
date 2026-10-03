@@ -105,8 +105,9 @@ handle_extension() {
 
         ## JSON
         json)
-            jq --color-output . "${FILE_PATH}" && exit 5
-            python -m json.tool -- "${FILE_PATH}" && exit 5
+            ## pretty-print first, but let bat (Catppuccin) do the coloring
+            jq . "${FILE_PATH}" | bat --language=json --color=always --style=plain --theme "${BAT_THEME:-Catppuccin Mocha}" && exit 5
+            dotpreview "${FILE_PATH}" && exit 5
             ;;
 
         ## Direct Stream Digital/Transfer (DSDIFF) and wavpack aren't detected
@@ -291,24 +292,13 @@ handle_mime() {
 
         ## Text
         text/* | */xml)
-            ## Syntax highlight
+            ## bat (via dotpreview) is the only normal renderer; pygmentize is the
+            ## emergency fallback when bat is unavailable.
             if [[ "$( stat --printf='%s' -- "${FILE_PATH}" )" -gt "${HIGHLIGHT_SIZE_MAX}" ]]; then
                 exit 2
             fi
-            if [[ "$( tput colors )" -ge 256 ]]; then
-                local pygmentize_format='terminal256'
-                local highlight_format='xterm256'
-            else
-                local pygmentize_format='terminal'
-                local highlight_format='ansi'
-            fi
-            env HIGHLIGHT_OPTIONS="${HIGHLIGHT_OPTIONS}" highlight \
-                --out-format="${highlight_format}" \
-                --force -- "${FILE_PATH}" && exit 5
-            env COLORTERM="${COLORTERM:-truecolor}" bat --color=always --style="plain" --theme "$(. "${XDG_CONFIG_HOME:-$HOME/.config}/palette-env.sh" 2>/dev/null; printf %s "${BAT_THEME:-nv-dark}")" \
-                -- "${FILE_PATH}" && exit 5
-            pygmentize -f "${pygmentize_format}" -O "style=${PYGMENTIZE_STYLE}"\
-                -- "${FILE_PATH}" && exit 5
+            dotpreview "${FILE_PATH}" && exit 5
+            pygmentize -f terminal256 -- "${FILE_PATH}" && exit 5
             exit 2;;
 
         ## DjVu
