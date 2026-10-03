@@ -7,7 +7,7 @@
 # export XDG_DATA_HOME="$HOME/.local/share"
 # export XDG_CACHE_HOME="$HOME/.cache"
 # export XDG_STATE_HOME="$HOME/.local/state"
-[ -d /usr/local/bin/tesseract ] && export PATH="/usr/local/bin/tesseract:$PATH"
+# PATH construction lives in .zshenv (typeset -U), before plugins and integrations.
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -162,7 +162,7 @@ export VISUAL='nvim'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Created by `pipx` on 2025-09-04 13:24:14
-export PATH="$PATH:$HOME/.local/bin"
+# PATH: see .zshenv (prepend ~/.local/bin, dedup)
 
 # Windows/WSL fallback: some shells lose the VS Code CLI even though the
 # Windows install still exists. Keep this scoped as a fallback so Linux
@@ -247,13 +247,11 @@ fi
 
 source <(fzf --zsh)
 
-# opencode
+# opencode + go paths (before zoxide init so its completions settle)
 export PATH="$HOME/.opencode/bin:$PATH"
-
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$PATH:$HOME/go/bin"
 export PATH="/usr/local/go/bin:$HOME/go/bin:$PATH"
-. "$HOME/.deno/env" # what does this even do? (should remove)
+
+[ -r "$HOME/.deno/env" ] && . "$HOME/.deno/env"
 
 # learned directory jumps: z / zi; keep after fzf so its picker integration exists
 eval "$(zoxide init zsh)"
