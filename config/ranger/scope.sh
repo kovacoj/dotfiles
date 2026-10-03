@@ -128,16 +128,9 @@ handle_image() {
     local mimetype="${1}"
     case "${mimetype}" in
         ## SVG
-        image/svg+xml|image/svg)
-            # rsvg-convert outputs PNG by default; convert to JPEG for cache
-            TMPSVG="$(mktemp -t ranger_svg.XXXXXX.png)"
-            if rsvg-convert --width "${DEFAULT_SIZE%x*}" \
-                --output="${TMPSVG}" \
-                "${FILE_PATH}"; then
-                convert -- "${TMPSVG}" "${IMAGE_CACHE_PATH}" && rm "${TMPSVG}" && exit 6
-                rm "${TMPSVG}"
-            fi
-            exit 1;;
+        # image/svg+xml|image/svg)
+        #     convert -- "${FILE_PATH}" "${IMAGE_CACHE_PATH}" && exit 6
+        #     exit 1;;
 
         ## DjVu
         # image/vnd.djvu)
@@ -147,9 +140,17 @@ handle_image() {
 
         ## Image
         image/*)
-            # For kitty preview method, Ranger handles images directly via KittyImageDisplayer.
-            # Exit 7 tells Ranger to pass the file directly to the image displayer.
-            # Only use identify/convert if we need to cache (exit 6), which isn't needed for kitty.
+            local orientation
+            orientation="$( identify -format '%[EXIF:Orientation]\n' -- "${FILE_PATH}" )"
+            ## If orientation data is present and the image actually
+            ## needs rotating ("1" means no rotation)...
+            if [[ -n "$orientation" && "$orientation" != 1 ]]; then
+                ## ...auto-rotate the image according to the EXIF data.
+                convert -- "${FILE_PATH}" -auto-orient "${IMAGE_CACHE_PATH}" && exit 6
+            fi
+
+            ## `w3mimgdisplay` will be called for all images (unless overriden
+            ## as above), but might fail for unsupported types.
             exit 7;;
 
         ## Video
@@ -159,14 +160,14 @@ handle_image() {
         #     exit 1;;
 
         ## PDF
-        application/pdf)
-            pdftoppm -f 1 -l 1 \
-                     -scale-to-x "${DEFAULT_SIZE%x*}" \
-                     -scale-to-y -1 \
-                     -singlefile \
-                     -jpeg -tiffcompression jpeg \
-                     -- "${FILE_PATH}" "${IMAGE_CACHE_PATH%.*}" \
-                && exit 6 || exit 1;;
+        # application/pdf)
+        #     pdftoppm -f 1 -l 1 \
+        #              -scale-to-x "${DEFAULT_SIZE%x*}" \
+        #              -scale-to-y -1 \
+        #              -singlefile \
+        #              -jpeg -tiffcompression jpeg \
+        #              -- "${FILE_PATH}" "${IMAGE_CACHE_PATH%.*}" \
+        #         && exit 6 || exit 1;;
 
 
         ## ePub, MOBI, FB2 (using Calibre)
@@ -304,7 +305,7 @@ handle_mime() {
             env HIGHLIGHT_OPTIONS="${HIGHLIGHT_OPTIONS}" highlight \
                 --out-format="${highlight_format}" \
                 --force -- "${FILE_PATH}" && exit 5
-            env COLORTERM=8bit bat --color=always --style="plain" \
+            env COLORTERM=truecolor bat --color=always --style="plain" \
                 -- "${FILE_PATH}" && exit 5
             pygmentize -f "${pygmentize_format}" -O "style=${PYGMENTIZE_STYLE}"\
                 -- "${FILE_PATH}" && exit 5
