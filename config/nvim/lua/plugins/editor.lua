@@ -19,10 +19,8 @@ return {
 		"ibhagwan/fzf-lua",
 		config = function()
 			local fzf = require("fzf-lua")
+			-- profile setup registers vim.ui.select silently on its own
 			fzf.setup({ vim.env.TMUX and "fzf-tmux" or "fzf-native" })
-			if vim.ui.select ~= fzf.ui_select then
-				fzf.register_ui_select()
-			end
 
 			local map = vim.keymap.set
 			map("n", "/", fzf.blines, { desc = "Fuzzy find in buffer" })
