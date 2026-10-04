@@ -152,7 +152,9 @@ return {
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
-		opts = {},
+		opts = {
+			triggers = { { "<leader>", mode = "n" } },
+		},
 		config = function(_, opts)
 			local wk = require("which-key")
 			wk.setup(opts)
