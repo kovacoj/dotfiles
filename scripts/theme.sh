@@ -226,5 +226,15 @@ else:
     print(f"warning: Windows Terminal settings not found at {wt_path}", file=sys.stderr)
 PYEOF
 
+# Windows system + apps follow the same mode on WSL.
+powershell="/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"
+if [[ "$name" == dark || "$name" == light ]] \
+    && [[ "$(uname -r)" == *[Mm]icrosoft* ]] \
+    && [[ -x "$powershell" ]]; then
+    "$powershell" -NoProfile -Command \
+        "& { $(<"$script_dir/windows-theme.ps1")
+} -Mode '$name'"
+fi
+
 tmux source-file "$HOME/.tmux.palette.conf" 2>/dev/null || true
 echo "theme: $name (Catppuccin '$name'; restart nvim + opencode to apply)"
