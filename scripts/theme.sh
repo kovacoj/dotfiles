@@ -52,7 +52,7 @@ fzf_colors = ",".join([
     f"marker:{pal['green']}",
     f"spinner:{pal['sapphire']}",
     f"header:{pal['overlay1']}",
-    f"border:{pal['surface1']}",
+    f"border:{pal['text']}",
     f"separator:{pal['surface1']}",
     f"preview-fg:{pal['text']}",
 ])
