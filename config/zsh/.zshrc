@@ -218,9 +218,9 @@ export FZF_DEFAULT_OPTS="
   --border rounded
 "
 if [ -n "${FZF_COLORS:-}" ]; then
-  export FZF_DEFAULT_OPTS+=" --color '$FZF_COLORS'"
+  FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color '$FZF_COLORS'"
 else
-  export FZF_DEFAULT_OPTS+=" --color 'border:#cdd6f4,bg+:#313244,fg+:#cdd6f4,hl+:#fab387:bold:underline,prompt:#89b4fa'"
+  FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'border:#cdd6f4,bg+:#313244,fg+:#cdd6f4,hl+:#fab387:bold:underline,prompt:#89b4fa'"
 fi
 
 # one shared picker surface: Ctrl-T and Alt-C look/behave identically
