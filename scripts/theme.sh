@@ -40,7 +40,6 @@ def hx(k):
     return pal[k]
 
 fzf_colors = ",".join([
-    f"bg:{pal['base']}",
     f"bg+:{pal['surface0']}",
     f"fg:{pal['text']}",
     f"fg+:{pal['text']}",
@@ -55,9 +54,7 @@ fzf_colors = ",".join([
     f"header:{pal['overlay1']}",
     f"border:{pal['surface1']}",
     f"separator:{pal['surface1']}",
-    f"scrollbar:{pal['surface2']}",
     f"preview-fg:{pal['text']}",
-    f"preview-bg:{pal['base']}",
 ])
 with open(f"{config_home}/palette-env.sh", "w") as f:
     f.write(
