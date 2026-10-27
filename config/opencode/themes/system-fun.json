@@ -38,7 +38,7 @@
     "syntaxNumber": "#ffaf5f",
     "syntaxType": "#c084fc",
     "syntaxOperator": "#ff5fd2",
-    "syntaxPunctuation": "none",
+    "syntaxPunctuation": "#ffffff",
     "diffAdded": "#87ff5f",
     "diffRemoved": "#ff5f87",
     "diffContext": "#e5e7eb",
