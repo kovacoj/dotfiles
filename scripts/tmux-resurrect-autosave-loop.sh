@@ -10,7 +10,10 @@ default_save_script=${HOME}/.tmux/plugins/tmux-resurrect/scripts/save.sh
 
 lock_name=$(printf '%s' "$socket_path" | tr '/:' '__')
 lock_base="${XDG_RUNTIME_DIR:-/tmp}/dotfiles-tmux"
-mkdir -p "$lock_base"
+if ! mkdir -p "$lock_base" 2>/dev/null; then
+  lock_base=/tmp/dotfiles-tmux
+  mkdir -p "$lock_base"
+fi
 lock_file="$lock_base/tmux-resurrect-autosave-${lock_name}.lock"
 
 # flock-based single-instance lock; survives SIGKILL, no stale lock dirs.

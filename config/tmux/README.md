@@ -15,7 +15,8 @@ This keeps sessions broad and disposable, while window names track the actual fo
 
 - `config/tmux/.tmux.conf`: main tmux config.
 - `scripts/tmux-ranger-shell.sh`: tmux window launcher for the `ranger -> shell` flow.
-- `scripts/tmux-git-status.sh`: status-bar helper for branch and dirty state.
+- `scripts/tmux-repo-status.sh`: combined folder, branch and dirty-state status helper.
+- `scripts/tmux-agent-toggle.sh`: persistent terminal drawer; hiding parks its pane without killing the process.
 - `config/zsh/tmux-ranger.zsh`: zsh-side startup and `ranger` wrapper.
 
 ## Prefix and navigation
@@ -25,11 +26,15 @@ This keeps sessions broad and disposable, while window names track the actual fo
 - Reload tmux config: `prefix + r`
 - Copy-mode: `prefix + [` — native conversation copy-mode in `ocv`; genuine tmux vi copy-mode elsewhere. In `ocv`, use `h/j/k/l` to move the cursor, `Ctrl+u`/`Ctrl+d` to scroll, `v`/`V` to select, `y` to yank, and `q` to return to the chat. The `ocv` launcher enables system-clipboard yanking. Regular OpenCode still only exposes its visible screen to tmux copy-mode.
 - Move between panes: `Ctrl+h`, `Ctrl+j`, `Ctrl+k`, `Ctrl+l`
+- Return to the last-used pane: `prefix + p`
+- Project picker: `prefix + P` (uppercase)
+- Persistent terminal drawer: `Ctrl+a`, or `prefix + a`
+- Git UI: `prefix + g` (lazygit popup)
 - Resize panes: `prefix + H`, `prefix + J`, `prefix + K`, `prefix + L`
 
 ## Window and pane workflow
 
-- New ranger-first window: `prefix + c`
+- New Ranger-first window in `~/personal`: `prefix + c`
 - New named session: `prefix + N`
 - Split horizontally in current directory: `prefix + %`
 - Split vertically in current directory: `prefix + "`
@@ -39,17 +44,14 @@ This keeps sessions broad and disposable, while window names track the actual fo
 
 ### `prefix + c` flow
 
-1. tmux opens a new window with a temporary placeholder name.
-2. `ranger` starts in `~/personal`.
-3. Navigate to the directory you want.
-4. Press `Shift+S` in `ranger`.
-5. tmux renames the window to that folder name and opens the shell there.
+`prefix + c` opens Ranger in `~/personal`. Press `Shift+S` in Ranger to leave
+it and continue in an interactive shell in the selected directory.
 
 Manual `ranger` in zsh uses the same chooser behavior, so `Shift+S` also returns you to the selected directory in the current shell, and renames the tmux window when inside tmux.
 
 ## Status bar
 
-- Left side: session name.
+- Left side: session name and CPU/RAM telemetry.
 - Click the left side session name to open tmux's session chooser.
 - Right side: current folder name plus git branch and dirty marker when inside a repo.
 - Window renaming from applications is disabled intentionally.

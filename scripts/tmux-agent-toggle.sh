@@ -64,16 +64,22 @@ if [[ -z "$agent_pane" ]] || ! pane_alive "$agent_pane"; then
     # Create a fresh drawer below the invoking pane.
     agent_pane="$(tmux split-window -v -l 40% -c "$cwd" -P -F '#{pane_id}' -t "$cur_pane")"
     tmux set-option -wt "$owner" @agent_pane "$agent_pane"
+    tmux set-option -wt "$owner" @agent_anchor "$cur_pane"
     tmux select-pane -t "$agent_pane"
     exit 0
 fi
 
 # ------------------------------------------------- resolve attach anchor --
 # Attach below the invoking pane; if invoked from the drawer itself, attach
-# below the first other pane in the window instead.
+# below the pane that opened it. Fall back to the first other pane if that
+# pane no longer belongs to this window.
 anchor="$cur_pane"
 if [[ "$cur_pane" == "$agent_pane" ]]; then
-    anchor="$(tmux list-panes -t "$owner" -F '#{pane_id}' | grep -vx "$agent_pane" | head -n1 || true)"
+    anchor="$(tmux show-options -wqt "$owner" -qv @agent_anchor 2>/dev/null || true)"
+    if [[ -z "$anchor" ]] ||
+       [[ "$(tmux display-message -p -t "$anchor" '#{window_id}' 2>/dev/null || true)" != "$owner" ]]; then
+        anchor="$(tmux list-panes -t "$owner" -F '#{pane_id}' | grep -vx "$agent_pane" | head -n1 || true)"
+    fi
 fi
 
 agent_window="$(tmux display-message -p -t "$agent_pane" '#{window_id}')"
@@ -84,6 +90,7 @@ if [[ "$agent_window" == "$owner" ]]; then
         tmux display-message -t "$cur_pane" 'agent drawer: refusing to hide the only pane in this window'
         exit 0
     fi
+    tmux set-option -wt "$owner" @agent_anchor "$anchor"
     win="$(tmux break-pane -dP -F '#{window_id}' -n "$drawer_name" -s "$agent_pane")"
     tmux has-session -t "=$park" 2>/dev/null || \
         tmux new-session -d -s "$park" -n holder 'exec sleep infinity'
@@ -92,5 +99,6 @@ if [[ "$agent_window" == "$owner" ]]; then
 else
     # ------------------------------------------------------ hidden -> show --
     tmux join-pane -v -l 40% -s "$agent_pane" -t "${anchor:-$owner}"
+    tmux set-option -wt "$owner" @agent_anchor "$anchor"
     tmux select-pane -t "$agent_pane"
 fi
