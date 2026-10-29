@@ -99,11 +99,11 @@ export COLORTERM=truecolor
 # palette-env.sh (per-theme values like PYGMENTIZE_STYLE/BAT_THEME) is written by scripts/theme.sh
 [ -f "$HOME/.config/palette-env.sh" ] && source "$HOME/.config/palette-env.sh"
 
-# `theme neon|latte` — switch all apps at once, then refresh preview colors here too
+# `theme dark|light` — switch Windows system and app mode only
 theme() {
   "$HOME/dotfiles/scripts/theme.sh" "$@" || return
-  [ -f "$HOME/.config/palette-env.sh" ] && source "$HOME/.config/palette-env.sh"
-  echo "theme switched; restart nvim + opencode for full effect"
+  # [ -f "$HOME/.config/palette-env.sh" ] && source "$HOME/.config/palette-env.sh"
+  # echo "theme switched; restart nvim + opencode for full effect"
 }
 
 # Replace these lines in your .zshrc:
@@ -255,6 +255,12 @@ source <(fzf --zsh)
 # opencode + go paths (before zoxide init so its completions settle)
 export PATH="$HOME/.opencode/bin:$PATH"
 export PATH="/usr/local/go/bin:$HOME/go/bin:$PATH"
+
+# CUDA toolkit (user-local install from scripts/install-cuda.sh; no GPU needed)
+if [ -d "$HOME/.local/opt/cuda/bin" ]; then
+  export PATH="$HOME/.local/opt/cuda/bin:$PATH"
+  export CUDA_PATH="$HOME/.local/opt/cuda"
+fi
 
 [ -r "$HOME/.deno/env" ] && . "$HOME/.deno/env"
 

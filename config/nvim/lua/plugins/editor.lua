@@ -19,6 +19,11 @@ return {
 	{
 		"ibhagwan/fzf-lua",
 		config = function()
+			-- WSL/tmux may retain a runtime directory that vanished after reboot.
+			-- Keep fzf-lua's RPC socket in Neovim's private temp dir in that case.
+			if not vim.g.fzf_lua_server and vim.fn.filewritable(vim.fn.stdpath("run")) ~= 2 then
+				vim.g.fzf_lua_server = vim.fn.serverstart(vim.fn.tempname() .. ".sock")
+			end
 			local fzf = require("fzf-lua")
 			-- profile setup registers vim.ui.select silently on its own
 			fzf.setup({ vim.env.TMUX and "fzf-tmux" or "fzf-native" })
@@ -48,11 +53,11 @@ return {
 		build = ":TSUpdate",
 		config = function()
 			local treesitter = require("nvim-treesitter")
-			local parsers = { "bash", "c", "cpp", "gitcommit", "json", "lua", "markdown", "markdown_inline", "python", "query", "vim", "vimdoc", "yaml", "zsh" }
+			local parsers = { "bash", "c", "cpp", "cuda", "gitcommit", "json", "lua", "markdown", "markdown_inline", "python", "query", "vim", "vimdoc", "yaml", "zsh" }
 			treesitter.setup()
 			treesitter.install(parsers)
 			vim.api.nvim_create_autocmd("FileType", {
-				pattern = { "bash", "c", "cpp", "gitcommit", "json", "lua", "markdown", "python", "vim", "yaml", "zsh" },
+				pattern = { "bash", "c", "cpp", "cuda", "gitcommit", "json", "lua", "markdown", "python", "vim", "yaml", "zsh" },
 				callback = function()
 					vim.treesitter.start()
 				end,

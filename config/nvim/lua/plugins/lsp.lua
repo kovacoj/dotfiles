@@ -11,6 +11,11 @@ return {
 			vim.lsp.config("lua_ls", {
 				settings = { Lua = { diagnostics = { globals = { "vim" } } } },
 			})
+
+			-- clangd: CUDA projects need a .clangd file in the project root with:
+			--   CompileFlags:
+			--     Add: [--cuda-path=<path-to-cuda>]
+			-- See ~/personal/abc4hpc/.clangd for an example.
 		end,
 		opts = {
 			ensure_installed = { "bashls", "clangd", "lua_ls", "pyright", "ruff" },
