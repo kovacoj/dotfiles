@@ -151,6 +151,7 @@ return {
 	},
 	{
 		"folke/which-key.nvim",
+		enabled = false,
 		event = "VeryLazy",
 		opts = {
 			triggers = { { "<leader>", mode = "n" } },
