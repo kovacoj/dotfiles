@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Switch the whole environment to a Catppuccin flavour.
-# usuario: theme <dark|light> → dark = Catppuccin Mocha, light = Catppuccin Latte.
+# Switch Windows system and app mode; terminal palette updates are disabled.
+# Usage: theme <dark|light>
 set -euo pipefail
 
 script_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
@@ -10,6 +10,8 @@ data="$repo/color-schemes/$name.json"
 
 [ -f "$data" ] || { echo "unknown theme: $name" >&2; exit 1; }
 
+# Disabled terminal/shell/editor palette settings, preserved for later.
+: <<'TERMINAL_THEME_DISABLED'
 python3 - "$repo" "$data" <<'PYEOF'
 import json, os, shutil, sys, urllib.request
 
@@ -227,6 +229,7 @@ if os.path.exists(wt_path):
 else:
     print(f"warning: Windows Terminal settings not found at {wt_path}", file=sys.stderr)
 PYEOF
+TERMINAL_THEME_DISABLED
 
 # Windows system + apps follow the same mode on WSL.
 powershell="/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"
@@ -238,5 +241,5 @@ if [[ "$name" == dark || "$name" == light ]] \
 } -Mode '$name'"
 fi
 
-tmux source-file "$HOME/.tmux.palette.conf" 2>/dev/null || true
-echo "theme: $name (Catppuccin '$name'; restart nvim + opencode to apply)"
+# tmux source-file "$HOME/.tmux.palette.conf" 2>/dev/null || true
+echo "Windows theme: $name"
