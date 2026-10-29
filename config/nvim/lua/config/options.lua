@@ -36,18 +36,38 @@ vim.diagnostic.config({ signs = false })
 -- settings.json files (Windows Terminal, VS Code) allow // comments.
 vim.filetype.add({ filename = { ["settings.json"] = "jsonc" } })
 
--- Neovim's OSC 52 provider works through WSL and tmux without xclip.
-if vim.env.SSH_TTY or vim.env.TMUX then
+-- OSC 52 writes work through tmux, but terminal clipboard reads may be blocked.
+local powershell = vim.fn.exepath("powershell.exe")
+if powershell == "" then
+	powershell = "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"
+end
+local windows_clipboard = vim.fn.executable(powershell) == 1
+if windows_clipboard or vim.env.SSH_TTY or vim.env.TMUX then
 	local osc52 = require("vim.ui.clipboard.osc52")
+	local function paste_windows()
+		local result = vim.system({
+			powershell,
+			"-NoProfile",
+			"-NonInteractive",
+			"-Command",
+			"[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false); "
+				.. "$text = Get-Clipboard -Raw; if ($null -ne $text) { [Console]::Write($text) }",
+		}, { text = true }):wait()
+		if result.code ~= 0 then
+			error("Windows clipboard read failed: " .. (result.stderr or ""))
+		end
+		return { vim.split(result.stdout or "", "\n", { plain = true }), "v" }
+	end
 	vim.g.clipboard = {
-		name = "OSC 52",
+		name = windows_clipboard and "OSC 52 / Windows clipboard" or "OSC 52",
 		copy = {
 			["+"] = osc52.copy("+"),
 			["*"] = osc52.copy("*"),
 		},
 		paste = {
-			["+"] = osc52.paste("+"),
-			["*"] = osc52.paste("*"),
+			["+"] = windows_clipboard and paste_windows or osc52.paste("+"),
+			["*"] = windows_clipboard and paste_windows or osc52.paste("*"),
 		},
+		cache_enabled = 0,
 	}
 end
