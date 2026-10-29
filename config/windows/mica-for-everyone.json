@@ -1,0 +1,18 @@
+{
+  "rules": [
+    {
+      "type": "global",
+      "titleBarColor": "System",
+      "backdropPreference": "None"
+    },
+    {
+      "type": "process",
+      "processName": "firefox",
+      "titleBarColor": "System",
+      "backdropPreference": "Acrylic",
+      "cornerPreference": "Default",
+      "extendFrameIntoClientArea": true,
+      "enableBlurBehind": true
+    }
+  ]
+}
