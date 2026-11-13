@@ -48,3 +48,7 @@ restore Firefox defaults.
 Real desktop-backed Acrylic is provided by the Microsoft Store build of Mica
 For Everyone. `config/windows/mica-for-everyone.json` disables global changes
 and applies Acrylic only to `firefox.exe`.
+
+VS Code's macOS-style right-side window controls are stored under
+`config/vscode`. `scripts/windows-vscode-css.ps1` applies or restores the CSS;
+run it from an elevated PowerShell session while VS Code is closed.

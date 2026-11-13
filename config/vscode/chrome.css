@@ -1,0 +1,109 @@
+/* Compact, theme-aware title bar with macOS-style controls on the right. */
+.monaco-workbench .part.titlebar {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--vscode-titleBar-activeBackground) 94%, var(--vscode-titleBar-activeForeground) 6%),
+    var(--vscode-titleBar-activeBackground)
+  ) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--vscode-titleBar-activeForeground) 12%, transparent) !important;
+  box-shadow:
+    inset 0 1px color-mix(in srgb, var(--vscode-titleBar-activeForeground) 7%, transparent),
+    0 2px 10px rgb(0 0 0 / 14%);
+  backdrop-filter: blur(24px) saturate(135%);
+}
+
+.monaco-workbench .part.titlebar.inactive {
+  background: var(--vscode-titleBar-inactiveBackground) !important;
+}
+
+.monaco-workbench .part.titlebar .titlebar-container {
+  padding-inline: 3px 0;
+}
+
+.monaco-workbench .part.titlebar .menubar-menu-button,
+.monaco-workbench .part.titlebar .monaco-toolbar .action-label {
+  border-radius: 7px !important;
+}
+
+.monaco-workbench .part.titlebar .titlebar-left > .window-appicon {
+  margin-inline: 2px 3px;
+  border-radius: 7px;
+}
+
+.monaco-workbench .part.titlebar .titlebar-center .command-center-center {
+  height: 24px !important;
+  border-color: color-mix(in srgb, var(--vscode-commandCenter-foreground) 16%, transparent) !important;
+  border-radius: 9px !important;
+  background: color-mix(in srgb, var(--vscode-commandCenter-background) 88%, transparent) !important;
+  box-shadow:
+    inset 0 1px color-mix(in srgb, var(--vscode-commandCenter-foreground) 8%, transparent),
+    0 1px 5px rgb(0 0 0 / 12%);
+  transition: border-color 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
+}
+
+.monaco-workbench .part.titlebar .titlebar-center .command-center-center:hover {
+  border-color: color-mix(in srgb, var(--vscode-commandCenter-foreground) 28%, transparent) !important;
+  background: color-mix(in srgb, var(--vscode-commandCenter-activeBackground) 92%, transparent) !important;
+  box-shadow:
+    inset 0 1px color-mix(in srgb, var(--vscode-commandCenter-activeForeground) 10%, transparent),
+    0 2px 8px rgb(0 0 0 / 16%);
+}
+
+.monaco-workbench .part.titlebar .titlebar-center .command-center-quick-pick .search-icon {
+  opacity: 0.65 !important;
+}
+
+.monaco-workbench .part.titlebar .titlebar-right > :not(.window-controls-container) {
+  opacity: 0.84;
+  transition: opacity 120ms ease;
+}
+
+.monaco-workbench .part.titlebar .titlebar-right > :not(.window-controls-container):hover {
+  opacity: 1;
+}
+
+.monaco-workbench.windows .part.titlebar .window-controls-container {
+  width: 64px !important;
+  padding-inline-end: 4px;
+}
+
+.monaco-workbench.windows .part.titlebar .window-controls-container > .window-icon {
+  position: relative;
+  width: 20px !important;
+  min-width: 20px !important;
+  color: transparent !important;
+  background: transparent !important;
+}
+
+.monaco-workbench.windows .part.titlebar .window-controls-container > .window-icon::before {
+  content: "" !important;
+  width: 16px !important;
+  height: 16px !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 16px 16px !important;
+}
+
+.monaco-workbench.windows .part.titlebar .window-minimize::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6.5' fill='%23febc2e' stroke='%23d99f25'/%3E%3Cpath d='M4.75 8h6.5' fill='none' stroke='%23805800' stroke-linecap='round' stroke-width='1.5'/%3E%3C/svg%3E") !important;
+}
+
+.monaco-workbench.windows .part.titlebar .window-max-restore::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6.5' fill='%2328c840' stroke='%2320a535'/%3E%3Cpath d='M5 8V5h3zm6 0v3H8z' fill='%23075d17'/%3E%3C/svg%3E") !important;
+}
+
+.monaco-workbench.windows .part.titlebar .window-close::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6.5' fill='%23ff5f57' stroke='%23d94b44'/%3E%3Cpath d='m5.5 5.5 5 5m0-5-5 5' fill='none' stroke='%23710b07' stroke-linecap='round' stroke-width='1.25'/%3E%3C/svg%3E") !important;
+}
+
+.monaco-workbench.windows .part.titlebar .window-controls-container > .window-icon:hover::before {
+  filter: brightness(1.08);
+}
+
+.monaco-workbench.windows .part.titlebar .window-controls-container > .window-icon:active::before {
+  filter: brightness(0.86);
+}
+
+.monaco-workbench.windows .part.titlebar.inactive .window-controls-container {
+  opacity: 0.65;
+}
