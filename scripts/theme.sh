@@ -13,16 +13,18 @@ data="$repo/color-schemes/$name.json"
 # Disabled terminal/shell/editor palette settings, preserved for later.
 : <<'TERMINAL_THEME_DISABLED'
 python3 - "$repo" "$data" <<'PYEOF'
-import json, os, shutil, sys, urllib.request
+import glob, json, os, shutil, sys, urllib.request
 
 repo, data_path = sys.argv[1], sys.argv[2]
 home = os.path.expanduser("~")
 config_home = os.environ.get("XDG_CONFIG_HOME", f"{home}/.config")
 state_home = os.environ.get("XDG_STATE_HOME", f"{home}/.local/state")
-wt_path = os.environ.get(
-    "DOTFILES_WT_SETTINGS",
-    "/mnt/c/Users/z005561w/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json",
-)
+wt_path = os.environ.get("DOTFILES_WT_SETTINGS")
+if not wt_path:
+    wt_path = next(iter(glob.glob(
+        "/mnt/c/Users/*/AppData/Local/Packages/"
+        "Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json"
+    )), "")
 
 with open(data_path) as f:
     t = json.load(f)
