@@ -74,6 +74,7 @@ link_file "$repo_dir/config/opencode/package.json" "$HOME/.config/opencode/packa
 link_file "$repo_dir/config/opencode/themes/catppuccin-mocha.json" "$HOME/.config/opencode/themes/catppuccin-mocha.json"
 link_file "$repo_dir/config/opencode/themes/catppuccin-latte.json" "$HOME/.config/opencode/themes/catppuccin-latte.json"
 link_file "$repo_dir/config/opencode/themes/system-fun.json" "$HOME/.config/opencode/themes/system-fun.json"
+link_file "$repo_dir/config/opencode/skills" "$HOME/.config/opencode/skills"
 link_file "$repo_dir/scripts/ocv.sh" "$HOME/.local/bin/ocv"
 link_file "$repo_dir/config/opencode/prompts/multimodal-reader.txt" "$HOME/.config/opencode/prompts/multimodal-reader.txt"
 
