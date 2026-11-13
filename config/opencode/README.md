@@ -19,6 +19,8 @@ Not tracked here:
 
 `~/.config/opencode/skills` is symlinked to this repository by `install.sh`.
 Run `uip skills install --agent opencode` to update the tracked copy in place.
+The UiPath CLI stores browser login credentials in `~/.uipath/.auth` and
+reuses them across shells; keep this file outside the repository.
 
 ## Windows Terminal note
 
