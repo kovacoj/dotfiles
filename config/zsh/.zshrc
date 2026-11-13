@@ -182,7 +182,7 @@ fi
 
 export NVM_DIR="$HOME/.nvm"
 load_nvm() {
-    unset -f load_nvm nvm node npm npx corepack yarn pnpm
+    unset -f load_nvm nvm node npm npx corepack yarn pnpm uip
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 }
@@ -194,6 +194,7 @@ npx() { load_nvm; npx "$@"; }
 corepack() { load_nvm; corepack "$@"; }
 yarn() { load_nvm; yarn "$@"; }
 pnpm() { load_nvm; pnpm "$@"; }
+uip() { load_nvm; uip "$@"; }
 
 # direnv loads per-project environment variables, mainly for work/company
 # projects where API keys and similar secrets should not live in the global
