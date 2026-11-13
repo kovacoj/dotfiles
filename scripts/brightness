@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -eu
+
+if [ "$#" -ne 1 ] || ! [[ $1 =~ ^([0-9]|[1-9][0-9]|100)$ ]]; then
+    printf 'Usage: brightness <0-100>\n' >&2
+    exit 2
+fi
+
+script_dir=$(CDPATH= cd -- "$(dirname -- "$(readlink -f -- "$0")")" && pwd)
+powershell=/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe
+control_my_monitor=
+
+if [ ! -x "$powershell" ]; then
+    printf '%s\n' 'brightness: Windows PowerShell is unavailable' >&2
+    exit 1
+fi
+
+for candidate in /mnt/c/Users/*/.local/bin/ControlMyMonitor.exe; do
+    if [ -x "$candidate" ]; then
+        control_my_monitor=$candidate
+        break
+    fi
+done
+if [ -z "$control_my_monitor" ]; then
+    printf '%s\n' 'brightness: ControlMyMonitor.exe is unavailable' >&2
+    exit 1
+fi
+
+export BRIGHTNESS_VALUE=$1
+export WSLENV="${WSLENV:+$WSLENV:}BRIGHTNESS_VALUE/w"
+"$control_my_monitor" /SetValue Primary 10 "$1" /SetValue Secondary 10 "$1"
+printf 'Brightness: %s%%\n' "$1"
+
+laptop_script=$(iconv -f UTF-8 -t UTF-16LE "$script_dir/windows-laptop-brightness.ps1" | base64 --wrap=0)
+setsid -f "$powershell" -NoProfile -NonInteractive -EncodedCommand "$laptop_script" \
+    </dev/null >/dev/null 2>&1

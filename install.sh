@@ -26,6 +26,8 @@ if $install_packages; then
     "$repo_dir/scripts/install-bat.sh"
 fi
 
+"$repo_dir/scripts/install-controlmymonitor.sh"
+
 link_file() {
     source=$1
     target=$2
@@ -57,6 +59,7 @@ link_file "$repo_dir/config/vim/.vimrc" "$HOME/.vimrc"
 link_file "$repo_dir/config/nvim" "$HOME/.config/nvim"
 link_file "$repo_dir/scripts/rgf" "$HOME/.local/bin/rgf"
 link_file "$repo_dir/scripts/dotpreview" "$HOME/.local/bin/dotpreview"
+link_file "$repo_dir/scripts/brightness" "$HOME/.local/bin/brightness"
 link_file "$repo_dir/config/ranger/rc.conf" "$HOME/.config/ranger/rc.conf"
 link_file "$repo_dir/config/ranger/rifle.conf" "$HOME/.config/ranger/rifle.conf"
 link_file "$repo_dir/config/ranger/scope.sh" "$HOME/.config/ranger/scope.sh"
