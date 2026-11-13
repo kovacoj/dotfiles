@@ -73,16 +73,16 @@
             ]
           }
         },
-        "qwen-3.5-27b": {
+        "glm-5.3-flash": {
           "limit": {
-            "context": 262144,
-            "output": 262144
+            "context": 1024000,
+            "output": 1024000
           }
         },
-        "devstral-small-2-24b-instruct-2512": {
+        "kimi-k3.1-pro": {
           "limit": {
-            "context": 256000,
-            "output": 256000
+            "context": 1048576,
+            "output": 1048576
           }
         }
       }
